@@ -1,74 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.phil.forgoodnessbakes.MainActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.phil.forgoodnessbakes.MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:clickable="true"
+            android:elevation="100dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="4dp">
+
+            <ImageView
+                android:id="@+id/nutella_cake_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/nutellacake" />
+
+            <TextView
+                android:id="@+id/nutella_cake_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#FF0000"
+                android:text="Nutella Cake"
+                android:textAlignment="viewStart"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:clickable="true"
+            android:elevation="100dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="4dp">
+
+            <ImageView
+                android:id="@+id/brownie_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/brownies" />
+
+            <TextView
+                android:id="@+id/brownie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#FF0000"
+                android:text="Brownie"
+                android:textAlignment="viewStart"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:clickable="true"
+            android:elevation="100dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="4dp">
 
 
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/yellow_cake_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/yellowcake" />
 
-    <ImageView
-        android:id="@+id/nutella_cake_image"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/brownie_image"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/nutellacake"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/yellow_cake_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#FF0000"
+                android:text="Yellow Cake"
+                android:textAlignment="viewStart"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+        </android.support.v7.widget.CardView>
 
-    <ImageView
-        android:layout_width="353dp"
-        android:layout_height="200dp"
-        app:srcCompat="@drawable/brownies"
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:clickable="true"
+            android:elevation="100dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="4dp">
 
-        android:id="@+id/brownie_image"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/yellow_cake_image" />
+            <ImageView
+                android:id="@+id/cheese_cake_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/originalcheesecake" />
 
-    <ImageView
-        android:id="@+id/yellow_cake_image"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/yellowcake"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/cheese_cake_image" />
+            <TextView
+                android:id="@+id/cheese_cake_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#FF0000"
+                android:text="Cheese Cake"
+                android:textAlignment="viewStart"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+        </android.support.v7.widget.CardView>
 
-    <ImageView
-        android:id="@+id/cheese_cake_image"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintLeft_toLeftOf="parent"
 
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/originalcheesecake"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
 
-</android.support.constraint.ConstraintLayout>
 
+
+
+
+    </LinearLayout>
 </ScrollView>
