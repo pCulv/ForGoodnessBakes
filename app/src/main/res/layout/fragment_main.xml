@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/nutella_cake" />
+                     />
 
                 <TextView
                     android:id="@+id/nutella_cake_title"
@@ -63,17 +63,17 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/brownie_image"
+                    android:id="@+id/brownies"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/brownies" />
+                     />
 
                 <TextView
                     android:id="@+id/brownie_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/brownie_image"
+                    android:layout_below="@id/brownies"
                     android:layout_gravity="bottom"
                     android:background="#FF0000"
                     android:text="Brownie"
@@ -104,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/yellowcake" />
+                     />
 
                 <TextView
                     android:id="@+id/yellow_cake_title"
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/originalcheesecake" />
+                     />
 
                 <TextView
                     android:id="@+id/cheese_cake_title"

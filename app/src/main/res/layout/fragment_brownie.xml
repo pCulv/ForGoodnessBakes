@@ -21,12 +21,11 @@
             >
 
             <ImageView
-                android:id="@+id/nutella_image"
+                android:id="@+id/brownie_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/nutella_cake"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"/>
 
@@ -81,7 +80,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_below="@id/nutella_ingredients_rv"
                 android:layout_marginStart="@dimen/text_margin"
-                 />
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/nutella_steps_rv"

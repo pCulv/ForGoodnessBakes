@@ -11,8 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
-            >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,21 +20,46 @@
         </activity>
         <activity
             android:name=".NutellaActivity"
-            android:label="Nutella Cake"
+            android:label="@string/nutella_cake"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/CollapsingToolBarTheme"
-            >
+            android:theme="@style/CollapsingToolBarTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-            </activity>
-
+        </activity>
         <activity
             android:name=".ViewRecipeStep"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".BrownieActivity"
+            android:label="@string/title_activity_brownie"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/CollapsingToolBarTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.phil.forgoodnessbakes.MainActivity" />
+        </activity>
+        <activity
+            android:name=".YellowCakeActivity"
+            android:label="@string/title_activity_yellow_cake"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/CollapsingToolBarTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.phil.forgoodnessbakes.MainActivity" />
+        </activity>
+        <activity
+            android:name=".CheeseCakeActivity"
+            android:label="@string/title_activity_cheese_cake"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/CollapsingToolBarTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.phil.forgoodnessbakes.MainActivity" />
         </activity>
     </application>
 
