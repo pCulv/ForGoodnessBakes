@@ -44,7 +44,7 @@ public class MainActivityTest {
         ViewInteraction imageView = onView(
                 allOf(withId(R.id.nutella_cake_image),
                         childAtPosition(
-                                allOf(withId(R.id.card_view),
+                                allOf(withId(R.id.nutella_card_view),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 0)),
@@ -55,7 +55,7 @@ public class MainActivityTest {
         ViewInteraction imageView2 = onView(
                 allOf(withId(R.id.brownie_image),
                         childAtPosition(
-                                allOf(withId(R.id.card_view2),
+                                allOf(withId(R.id.brownie_card_view),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 1)),
@@ -66,7 +66,7 @@ public class MainActivityTest {
         ViewInteraction imageView3 = onView(
                 allOf(withId(R.id.yellow_cake_image),
                         childAtPosition(
-                                allOf(withId(R.id.card_view3),
+                                allOf(withId(R.id.brownie_card_view),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 2)),
@@ -77,7 +77,7 @@ public class MainActivityTest {
         ViewInteraction textView = onView(
                 allOf(withId(R.id.nutella_cake_title), withText("Nutella Cake"),
                         childAtPosition(
-                                allOf(withId(R.id.card_view),
+                                allOf(withId(R.id.nutella_card_view),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 0)),
@@ -88,7 +88,7 @@ public class MainActivityTest {
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.brownie_title), withText("Brownie"),
                         childAtPosition(
-                                allOf(withId(R.id.card_view2),
+                                allOf(withId(R.id.brownie_card_view),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 1)),
@@ -99,7 +99,7 @@ public class MainActivityTest {
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.brownie_title), withText("Brownie"),
                         childAtPosition(
-                                allOf(withId(R.id.card_view2),
+                                allOf(withId(R.id.brownie_card_view),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 1)),
