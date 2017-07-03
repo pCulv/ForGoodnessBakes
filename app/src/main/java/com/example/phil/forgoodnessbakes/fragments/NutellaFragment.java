@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 
 public class NutellaFragment extends Fragment {
 
+
+
     public NutellaFragment() {}
 
     @Nullable
@@ -25,6 +27,7 @@ public class NutellaFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nutella, container, false);
         ButterKnife.bind(this, view);
+
 
 
         return view;
