@@ -4,7 +4,7 @@ package com.example.phil.forgoodnessbakes.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Steps implements Parcelable
+public class Step implements Parcelable
 {
     private String id;
 
@@ -16,7 +16,7 @@ public class Steps implements Parcelable
 
     private String thumbnailURL;
 
-    protected Steps(Parcel in) {
+    protected Step(Parcel in) {
         id = in.readString();
         shortDescription = in.readString();
         description = in.readString();
@@ -24,15 +24,15 @@ public class Steps implements Parcelable
         thumbnailURL = in.readString();
     }
 
-    public static final Creator<Steps> CREATOR = new Creator<Steps>() {
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
         @Override
-        public Steps createFromParcel(Parcel in) {
-            return new Steps(in);
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
         }
 
         @Override
-        public Steps[] newArray(int size) {
-            return new Steps[size];
+        public Step[] newArray(int size) {
+            return new Step[size];
         }
     };
 

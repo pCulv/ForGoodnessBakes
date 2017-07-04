@@ -7,7 +7,7 @@ import android.os.Parcelable;
 
 public class RecipeModel implements Parcelable
 {
-    private Ingredients[] ingredients;
+    private Ingredient[] ingredients;
 
     private String id;
 
@@ -17,7 +17,7 @@ public class RecipeModel implements Parcelable
 
     private String image;
 
-    private Steps[] steps;
+    private Step[] steps;
 
     protected RecipeModel(Parcel in) {
         id = in.readString();
@@ -38,12 +38,12 @@ public class RecipeModel implements Parcelable
         }
     };
 
-    public Ingredients[] getIngredients ()
+    public Ingredient[] getIngredients ()
     {
         return ingredients;
     }
 
-    public void setIngredients (Ingredients[] ingredients)
+    public void setIngredients (Ingredient[] ingredients)
     {
         this.ingredients = ingredients;
     }
@@ -88,12 +88,12 @@ public class RecipeModel implements Parcelable
         this.image = image;
     }
 
-    public Steps[] getSteps ()
+    public Step[] getSteps ()
     {
         return steps;
     }
 
-    public void setSteps (Steps[] steps)
+    public void setSteps (Step[] steps)
     {
         this.steps = steps;
     }

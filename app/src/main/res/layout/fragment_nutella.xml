@@ -73,7 +73,7 @@
                 />
 
             <TextView
-                android:id="@+id/steps_tv"
+                android:id="@+id/nutella_steps_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Steps:"
@@ -87,7 +87,7 @@
                 android:id="@+id/nutella_steps_rv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/steps_tv"
+                android:layout_below="@id/nutella_steps_tv"
                 android:layout_marginStart="@dimen/text_margin"
                 />
 

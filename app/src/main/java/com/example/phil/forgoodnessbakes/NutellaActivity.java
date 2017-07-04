@@ -12,27 +12,26 @@ import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.Adapters.IngredientsAdapter;
 import com.example.phil.forgoodnessbakes.Adapters.StepsAdapter;
-import com.example.phil.forgoodnessbakes.Models.Ingredients;
-import com.example.phil.forgoodnessbakes.Models.RecipeModel;
-import com.example.phil.forgoodnessbakes.Models.Steps;
-import com.example.phil.forgoodnessbakes.NetworkUtils.APIClient;
-import com.example.phil.forgoodnessbakes.NetworkUtils.IngredientsDeserializer;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import com.example.phil.forgoodnessbakes.Models.Ingredient;
+import com.example.phil.forgoodnessbakes.Models.Step;
+import com.example.phil.forgoodnessbakes.NetworkUtils.InternetConnection;
+import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class NutellaActivity extends AppCompatActivity {
 
@@ -40,12 +39,15 @@ public class NutellaActivity extends AppCompatActivity {
     @BindView(R.id.nutella_ingredients_rv) RecyclerView ingredientsRecyclerView;
     @BindView(R.id.nutella_steps_rv) RecyclerView stepsRecyclerView;
 
+    IngredientsAdapter ingredientsAdapter;
+    StepsAdapter stepsAdapter;
     Toolbar toolbar;
-    private IngredientsAdapter ingredientsAdapter;
-    private StepsAdapter stepsAdapter;
-    private ArrayList<Ingredients> mIngredients = new ArrayList<>();
-    private ArrayList<Steps> mSteps = new ArrayList<>();
+    private ArrayList<Ingredient> mIngredients = new ArrayList<>();
+    private ArrayList<Step> mSteps = new ArrayList<>();
+    public String recipesUrl =
+            "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
+    private static final String TAG = NutellaActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class NutellaActivity extends AppCompatActivity {
 
         Picasso.with(this)
                 .load(R.drawable.nutella_pie)
-                .resize(1024,500)
+                .resize(1024, 500)
                 .centerCrop()
                 .error(R.drawable.placeholder)
                 .into(nutellaCakeImage);
@@ -74,48 +76,12 @@ public class NutellaActivity extends AppCompatActivity {
 
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
-        // retrofit query for ingredients recyclerView
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        if (InternetConnection.checkConnection(this)) {
+            getIngredients();
+        }else {
+            Toast.makeText(this, "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
 
-        Type listType = new TypeToken<ArrayList<RecipeModel>>() {
-        }.getType();
-
-        Gson gson =
-                new GsonBuilder()
-                        .registerTypeAdapter(listType, new IngredientsDeserializer())
-                        .create();
-
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://d17h27t6h515a5.cloudfront.net")
-                .addConverterFactory(GsonConverterFactory.create(gson));
-
-        Retrofit retrofit = builder.client(httpClient.build()).build();
-
-        // Create REST adapter which points to API endpoint
-        APIClient mClient = retrofit.create(APIClient.class);
-
-        // Fetch Popular Movies
-        Call<ArrayList<Ingredients>> mCall = mClient.getIngredients();
-
-        mCall.enqueue(new Callback<ArrayList<Ingredients>>() {
-
-            @Override
-            public void onResponse(Call<ArrayList<Ingredients>> call,
-                                   Response<ArrayList<Ingredients>> response) {
-                ArrayList<Ingredients> ingredients = response.body();
-                ingredientsRecyclerView.setAdapter(new IngredientsAdapter(NutellaActivity.this,
-                        ingredients));
-                Log.i("Url", response.raw().toString());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Ingredients>> call, Throwable t) {
-                Toast.makeText(NutellaActivity.this, "ERROR NO NETWORK CONNECTION",
-                        Toast.LENGTH_SHORT).show();
-
-                t.printStackTrace();
-            }
-        });
+        }
 
         // setup recyclerview for steps
         LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this);
@@ -124,7 +90,69 @@ public class NutellaActivity extends AppCompatActivity {
 
         stepsAdapter = new StepsAdapter(NutellaActivity.this, mSteps);
         stepsRecyclerView.setAdapter(stepsAdapter);
+    }
 
+    private void getIngredients() {
+        // parse json and retrieve ingredients.
+        try {
+            run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void run() throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(recipesUrl)
+                .build();
+        // Asynchronous call for json data
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                Toast.makeText(NutellaActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                final String myResponse = response.body().string();
+                Log.i("Url", response.toString());
+                NutellaActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONArray jsonArray = new JSONArray(myResponse);
+                            JSONObject firstRecipe = jsonArray.getJSONObject(0);
+                            JSONArray ingredientList = firstRecipe.getJSONArray("ingredients");
+
+                            for (int i = 0; i < ingredientList.length(); i++) {
+                                JSONObject innerObject = ingredientList.getJSONObject(i);
+
+                                String quantity = innerObject.getString(JSONKeys.KEY_QUANTITY);
+                                String measure = innerObject.getString(JSONKeys.KEY_MEASURE);
+                                String ingredientName = innerObject.getString(JSONKeys.KEY_INGREDIENT);
+
+                                Ingredient ingredient = new Ingredient();
+                                ingredient.setQuantity(Float.parseFloat(String.valueOf(quantity)));
+                                ingredient.setMeasure(measure);
+                                ingredient.setIngredient(ingredientName);
+
+                                mIngredients.add(ingredient);
+                                ingredientsAdapter.notifyDataSetChanged();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
 
     }
 }

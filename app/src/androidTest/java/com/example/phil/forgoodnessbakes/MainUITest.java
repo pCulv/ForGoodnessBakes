@@ -124,24 +124,24 @@ public class MainUITest {
         imageView5.check(matches(isDisplayed()));
 
         ViewInteraction textView4 = onView(
-                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredients:"),
+                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredient:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 0),
                         isDisplayed()));
-        textView4.check(matches(withText("Ingredients:")));
+        textView4.check(matches(withText("Ingredient:")));
 
         ViewInteraction textView5 = onView(
-                allOf(withId(R.id.steps_tv), withText("Steps:"),
+                allOf(withId(R.id.steps_tv), withText("Step:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 2),
                         isDisplayed()));
-        textView5.check(matches(withText("Steps:")));
+        textView5.check(matches(withText("Step:")));
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -166,24 +166,24 @@ public class MainUITest {
         imageView6.check(matches(isDisplayed()));
 
         ViewInteraction textView6 = onView(
-                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredients:"),
+                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredient:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 0),
                         isDisplayed()));
-        textView6.check(matches(withText("Ingredients:")));
+        textView6.check(matches(withText("Ingredient:")));
 
         ViewInteraction textView7 = onView(
-                allOf(withId(R.id.steps_tv), withText("Steps:"),
+                allOf(withId(R.id.steps_tv), withText("Step:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 2),
                         isDisplayed()));
-        textView7.check(matches(withText("Steps:")));
+        textView7.check(matches(withText("Step:")));
 
         ViewInteraction appCompatImageButton2 = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -208,24 +208,24 @@ public class MainUITest {
         imageView7.check(matches(isDisplayed()));
 
         ViewInteraction textView8 = onView(
-                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredients:"),
+                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredient:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 0),
                         isDisplayed()));
-        textView8.check(matches(withText("Ingredients:")));
+        textView8.check(matches(withText("Ingredient:")));
 
         ViewInteraction textView9 = onView(
-                allOf(withId(R.id.steps_tv), withText("Steps:"),
+                allOf(withId(R.id.steps_tv), withText("Step:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 2),
                         isDisplayed()));
-        textView9.check(matches(withText("Steps:")));
+        textView9.check(matches(withText("Step:")));
 
         ViewInteraction appCompatImageButton3 = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -250,24 +250,24 @@ public class MainUITest {
         imageView8.check(matches(isDisplayed()));
 
         ViewInteraction textView10 = onView(
-                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredients:"),
+                allOf(withId(R.id.nutella_ingredients_tv), withText("Ingredient:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 0),
                         isDisplayed()));
-        textView10.check(matches(withText("Ingredients:")));
+        textView10.check(matches(withText("Ingredient:")));
 
         ViewInteraction textView11 = onView(
-                allOf(withId(R.id.steps_tv), withText("Steps:"),
+                allOf(withId(R.id.steps_tv), withText("Step:"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.scroll),
                                         0),
                                 2),
                         isDisplayed()));
-        textView11.check(matches(withText("Steps:")));
+        textView11.check(matches(withText("Step:")));
 
         ViewInteraction appCompatImageButton4 = onView(
                 allOf(withContentDescription("Navigate up"),

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.phil.forgoodnessbakes.Models.Steps;
+import com.example.phil.forgoodnessbakes.Models.Step;
 import com.example.phil.forgoodnessbakes.R;
 
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ public class StepsAdapter extends
         RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
     private Context mContext;
-    private List<Steps> mSteps = new ArrayList<>();
+    private List<Step> mSteps = new ArrayList<>();
 
 
-    public StepsAdapter(Context context, List<Steps> steps) {
+    public StepsAdapter(Context context, List<Step> steps) {
         this.mContext = context;
         this.mSteps = steps;
     }
@@ -59,9 +59,9 @@ public class StepsAdapter extends
     @Override
     public void onBindViewHolder(StepsAdapter.StepsViewHolder holder, int position) {
 
-        final Steps steps = mSteps.get(position);
+        final Step step = mSteps.get(position);
         // display short description of recipe in
-        holder.shortDescriptionTextView.setText(steps.getShortDescription());
+        holder.shortDescriptionTextView.setText(step.getShortDescription());
 
     }
 

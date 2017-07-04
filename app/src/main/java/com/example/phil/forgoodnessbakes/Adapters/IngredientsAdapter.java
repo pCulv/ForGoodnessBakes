@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.phil.forgoodnessbakes.Models.Ingredients;
+import com.example.phil.forgoodnessbakes.Models.Ingredient;
 import com.example.phil.forgoodnessbakes.R;
 
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ public class IngredientsAdapter extends
         RecyclerView.Adapter<IngredientsAdapter.IngredientsViewHolder> {
 
     private Context mContext;
-    private List<Ingredients> mIngredients = new ArrayList<>();
+    private List<Ingredient> mIngredients = new ArrayList<>();
 
 
-    public IngredientsAdapter (Context context, List<Ingredients> ingredients) {
+    public IngredientsAdapter (Context context, List<Ingredient> ingredients) {
         this.mContext = context;
         this.mIngredients = ingredients;
     }
@@ -55,10 +55,10 @@ public class IngredientsAdapter extends
     @Override
     public void onBindViewHolder(IngredientsAdapter.IngredientsViewHolder holder, int position) {
 
-        final Ingredients ingredients = mIngredients.get(position);
-        holder.quantityTextView.setText(ingredients.getQuantity());
-        holder.measureTextView.setText(ingredients.getMeasure());
-        holder.ingredientTextView.setText(ingredients.getIngredient());
+        final Ingredient ingredient = mIngredients.get(position);
+        holder.quantityTextView.setText(String.valueOf(ingredient.getQuantity()));
+        holder.measureTextView.setText(ingredient.getMeasure());
+        holder.ingredientTextView.setText(ingredient.getIngredient());
     }
 
     @Override
