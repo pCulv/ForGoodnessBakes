@@ -2,6 +2,7 @@ package com.example.phil.forgoodnessbakes;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +75,7 @@ public class CheeseCakeActivity extends AppCompatActivity {
 
         if (InternetConnection.checkConnection(this)) {
             getIngredients();
+            getSteps();
         }else {
             Toast.makeText(this, "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
 
@@ -87,6 +89,10 @@ public class CheeseCakeActivity extends AppCompatActivity {
 
         stepsAdapter = new StepsAdapter(CheeseCakeActivity.this, mSteps);
         stepsRV.setAdapter(stepsAdapter);
+
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(stepsRV.getContext(),
+                stepsLayoutManager.getOrientation());
+        stepsRV.addItemDecoration(mDividerItemDecoration);
     }
 
     private void getIngredients() {
@@ -152,4 +158,63 @@ public class CheeseCakeActivity extends AppCompatActivity {
         });
     }
 
+    void getSteps() {
+        try {
+            runSteps();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    void runSteps() throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(recipesUrl)
+                .build();
+        // Asynchronous call for json data
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                Toast.makeText(CheeseCakeActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                final String myResponse = response.body().string();
+                Log.i("Url", response.toString());
+                CheeseCakeActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONArray jsonArray = new JSONArray(myResponse);
+                            JSONObject firstRecipe = jsonArray.getJSONObject(3);
+                            JSONArray steps = firstRecipe.getJSONArray("steps");
+
+                            for (int i = 0; i < steps.length(); i++) {
+                                JSONObject innerObject = steps.getJSONObject(i);
+
+                                String shortDescription = innerObject.getString(JSONKeys.KEY_SHORT_DESCRIPTION);
+
+
+                                Step step = new Step();
+                                step.setShortDescription(shortDescription);
+
+                                mSteps.add(step);
+                                stepsAdapter.notifyDataSetChanged();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
+
+    }
 }
