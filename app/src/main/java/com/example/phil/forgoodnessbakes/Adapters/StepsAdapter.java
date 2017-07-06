@@ -1,6 +1,7 @@
 package com.example.phil.forgoodnessbakes.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.phil.forgoodnessbakes.Models.Step;
+import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.R;
+import com.example.phil.forgoodnessbakes.StepDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +43,16 @@ public class StepsAdapter extends
 
         @Override
         public void onClick(View v) {
-            // TODO: add intents to open the video and description view of the recipe step
 
+            Step stepPosition = mSteps.get(getAdapterPosition());
+
+            Context context = itemView.getContext();
+            Intent userClick = new Intent(context, StepDetailActivity.class);
+            userClick.putExtra(JSONKeys.KEY_DESCRIPTION, stepPosition.getDescription());
+            userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepPosition.getVideoURL());
+            userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepPosition.getThumbnailURL());
+
+            context.startActivity(userClick);
         }
     }
 

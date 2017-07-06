@@ -21,6 +21,7 @@ public class IngredientsAdapter extends
     private List<Ingredient> mIngredients = new ArrayList<>();
 
 
+
     public IngredientsAdapter (Context context, List<Ingredient> ingredients) {
         this.mContext = context;
         this.mIngredients = ingredients;
@@ -39,6 +40,7 @@ public class IngredientsAdapter extends
             measureTextView = (TextView) itemView.findViewById(R.id.measure_tv);
             ingredientTextView = (TextView) itemView.findViewById(R.id.ingredient_tv);
 
+
         }
     }
     public IngredientsAdapter.IngredientsViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -55,10 +57,12 @@ public class IngredientsAdapter extends
     @Override
     public void onBindViewHolder(IngredientsAdapter.IngredientsViewHolder holder, int position) {
 
+
         final Ingredient ingredient = mIngredients.get(position);
         holder.quantityTextView.setText(String.valueOf(ingredient.getQuantity()));
         holder.measureTextView.setText(ingredient.getMeasure());
         holder.ingredientTextView.setText(ingredient.getIngredient());
+
     }
 
     @Override

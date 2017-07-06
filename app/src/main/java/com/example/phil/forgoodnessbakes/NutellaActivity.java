@@ -203,10 +203,15 @@ public class NutellaActivity extends AppCompatActivity {
                                 JSONObject innerObject = steps.getJSONObject(i);
 
                                 String shortDescription = innerObject.getString(JSONKeys.KEY_SHORT_DESCRIPTION);
-
+                                String description = innerObject.getString(JSONKeys.KEY_DESCRIPTION);
+                                String videoUrl = innerObject.getString(JSONKeys.KEY_VIDEO_URL);
+                                String thumbnailUrl = innerObject.getString(JSONKeys.KEY_THUMBNAIL_URL);
 
                                 Step step = new Step();
                                 step.setShortDescription(shortDescription);
+                                step.setDescription(description);
+                                step.setVideoURL(videoUrl);
+                                step.setThumbnailURL(thumbnailUrl);
 
                                 mSteps.add(step);
                                 stepsAdapter.notifyDataSetChanged();
