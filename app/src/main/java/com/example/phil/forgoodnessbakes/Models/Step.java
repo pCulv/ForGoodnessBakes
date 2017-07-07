@@ -1,17 +1,13 @@
 package com.example.phil.forgoodnessbakes.Models;
 
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Step
 {
 
     private String id;
 
     private String shortDescription;
-    @SerializedName("description")
-    @Expose
+
     private String description;
 
     private String videoURL;

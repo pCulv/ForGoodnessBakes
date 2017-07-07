@@ -17,6 +17,7 @@ import com.example.phil.forgoodnessbakes.Models.Ingredient;
 import com.example.phil.forgoodnessbakes.Models.Step;
 import com.example.phil.forgoodnessbakes.NetworkUtils.InternetConnection;
 import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
+import com.example.phil.forgoodnessbakes.fragments.NutellaFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -34,7 +35,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class NutellaActivity extends AppCompatActivity {
+public class NutellaActivity extends AppCompatActivity implements NutellaFragment.onStepClickedListener{
 
     @BindView(R.id.nutella_image) ImageView nutellaCakeImage;
     @BindView(R.id.nutella_ingredients_rv) RecyclerView ingredientsRecyclerView;
@@ -50,11 +51,15 @@ public class NutellaActivity extends AppCompatActivity {
 
     private static final String TAG = NutellaActivity.class.getSimpleName();
 
+    private boolean mTwoPane;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutella);
         ButterKnife.bind(this);
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -225,5 +230,10 @@ public class NutellaActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onStepSelected() {
+        Toast.makeText(this, "step clicked", Toast.LENGTH_SHORT).show();
     }
 }

@@ -162,6 +162,14 @@ public class StepDetailActivity extends AppCompatActivity implements ExoPlayer.E
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+        if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
+            mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
+                    mExoPlayer.getCurrentPosition(), 1f);
+        } else if((playbackState == ExoPlayer.STATE_READY)){
+            mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
+                    mExoPlayer.getCurrentPosition(), 1f);
+        }
+        mMediaSession.setPlaybackState(mStateBuilder.build());
 
     }
 

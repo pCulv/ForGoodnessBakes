@@ -52,6 +52,8 @@ public class StepsAdapter extends
             userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepPosition.getVideoURL());
             userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepPosition.getThumbnailURL());
 
+
+
             context.startActivity(userClick);
         }
     }
