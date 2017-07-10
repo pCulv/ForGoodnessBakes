@@ -39,7 +39,7 @@ public class BrownieActivity extends AppCompatActivity {
     @BindView(R.id.brownie_image) ImageView brownieImage;
     @BindView(R.id.brownie_ingredients_rv) RecyclerView brownieRecyclerView;
     @BindView(R.id.brownie_steps_rv) RecyclerView brownieStepsRV;
-
+    FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
     Toolbar toolbar;
@@ -91,7 +91,7 @@ public class BrownieActivity extends AppCompatActivity {
         brownieStepsRV.setLayoutManager(stepsLayoutManager);
         brownieStepsRV.setHasFixedSize(true);
 
-        stepsAdapter = new StepsAdapter(BrownieActivity.this, mSteps);
+        stepsAdapter = new StepsAdapter(BrownieActivity.this, mSteps, listener);
         brownieStepsRV.setAdapter(stepsAdapter);
 
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(brownieStepsRV.getContext(),

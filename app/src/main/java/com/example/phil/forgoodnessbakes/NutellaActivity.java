@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
+import com.example.phil.forgoodnessbakes.Models.Step;
 
 import butterknife.ButterKnife;
 
-public class NutellaActivity extends AppCompatActivity  {
+public class NutellaActivity extends AppCompatActivity implements FragmentInterface {
     Toolbar toolbar;
-    private Boolean mTabletMode = false;
-    private FragmentInterface fragmentInterface;
+    private Boolean mTabletMode;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +25,15 @@ public class NutellaActivity extends AppCompatActivity  {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
+        if(findViewById(R.id.detail_container) != null) {
+            mTabletMode = true;
+            Toast.makeText(this, "You're in tablet mode!", Toast.LENGTH_SHORT).show();
+        }
 
     }
-    public interface FragmentInterface {
-        void replaceFragment();
+
+    @Override
+    public void replaceFragment(Step stepModel) {
+
     }
 }

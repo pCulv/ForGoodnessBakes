@@ -1,5 +1,6 @@
 package com.example.phil.forgoodnessbakes.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.Adapters.IngredientsAdapter;
 import com.example.phil.forgoodnessbakes.Adapters.StepsAdapter;
+import com.example.phil.forgoodnessbakes.FragmentInterface;
 import com.example.phil.forgoodnessbakes.Models.Ingredient;
 import com.example.phil.forgoodnessbakes.Models.Step;
 import com.example.phil.forgoodnessbakes.NetworkUtils.InternetConnection;
@@ -44,7 +46,7 @@ public class NutellaFragment extends Fragment {
     @BindView(R.id.nutella_ingredients_rv)
     RecyclerView ingredientsRecyclerView;
     @BindView(R.id.nutella_steps_rv) RecyclerView stepsRecyclerView;
-    private NutellaActivity.FragmentInterface fragmentInterface;
+    FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
     private ArrayList<Ingredient> mIngredients = new ArrayList<>();
@@ -54,7 +56,19 @@ public class NutellaFragment extends Fragment {
 
     private static final String TAG = NutellaActivity.class.getSimpleName();
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (FragmentInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement FragmentInterface");
+        }
+    }
 
+    public NutellaFragment() {
+    }
 
     @Nullable
     @Override
@@ -94,7 +108,7 @@ public class NutellaFragment extends Fragment {
         stepsRecyclerView.setLayoutManager(stepsLayoutManager);
         stepsRecyclerView.setHasFixedSize(true);
 
-        stepsAdapter = new StepsAdapter(this.getActivity(), mSteps);
+        stepsAdapter = new StepsAdapter(this.getActivity(), mSteps,  listener);
 
 
         stepsRecyclerView.setAdapter(stepsAdapter);
@@ -108,9 +122,6 @@ public class NutellaFragment extends Fragment {
         return view;
 
     }
-
-
-
 
     private void getIngredients() {
         // parse json and retrieve ingredients.

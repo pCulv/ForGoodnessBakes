@@ -64,27 +64,11 @@ public class DetailActivityFragment extends Fragment implements ExoPlayer.EventL
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
         ButterKnife.bind(this, view);
 
-        String description;
-        Intent userClick = getActivity().getIntent();
-        Bundle bundle = userClick.getExtras();
-        String videoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
-        description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
-        stepDescription.setText(description);
 
-
-
-        if (Objects.equals(videoUrl, "")) {
-            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
-        }
-
-        Uri mMediaUri = Uri.parse(videoUrl);
-        SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
-
-        simpleExoPlayerView.setPlayer(mExoPlayer);
-
+        updateDetailView();
         initializeMediaSession();
 
-        initializePlayer(mMediaUri);
+
 
         return view;
     }
@@ -108,6 +92,29 @@ public class DetailActivityFragment extends Fragment implements ExoPlayer.EventL
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(true);
         }
+    }
+
+    public void updateDetailView() {
+
+        String description;
+        Intent userClick = getActivity().getIntent();
+        Bundle bundle = userClick.getExtras();
+        String videoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
+        description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
+        stepDescription.setText(description);
+
+
+
+        if (Objects.equals(videoUrl, "")) {
+            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
+        }
+
+        Uri mMediaUri = Uri.parse(videoUrl);
+        SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
+
+        simpleExoPlayerView.setPlayer(mExoPlayer);
+
+        initializePlayer(mMediaUri);
     }
 
     private void initializeMediaSession() {

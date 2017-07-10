@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.phil.forgoodnessbakes.FragmentInterface;
 import com.example.phil.forgoodnessbakes.Models.Step;
 import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.R;
@@ -22,17 +23,17 @@ public class StepsAdapter extends
         RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
     private Context mContext;
     private List<Step> mSteps = new ArrayList<>();
+    private FragmentInterface listener;
 
 
-
-    public StepsAdapter(Context context, List<Step> steps) {
+    public StepsAdapter(Context context, List<Step> steps, FragmentInterface listener) {
         this.mContext = context;
         this.mSteps = steps;
+        this.listener = listener;
     }
 
-    public class StepsViewHolder extends RecyclerView.ViewHolder  {
+    public class StepsViewHolder extends RecyclerView.ViewHolder {
         TextView shortDescriptionTextView;
-
 
         public StepsViewHolder(final View itemView) {
             super(itemView);
@@ -44,19 +45,17 @@ public class StepsAdapter extends
                     Step stepPosition = mSteps.get(getAdapterPosition());
                     Context context = itemView.getContext();
 
+                    Intent userClick = new Intent(context, StepDetailActivity.class);
+                    userClick.putExtra(JSONKeys.KEY_DESCRIPTION, stepPosition.getDescription());
+                    userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepPosition.getVideoURL());
+                    userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepPosition.getThumbnailURL());
+                    context.startActivity(userClick);
 
-                        Intent userClick = new Intent(context, StepDetailActivity.class);
-                        userClick.putExtra(JSONKeys.KEY_DESCRIPTION, stepPosition.getDescription());
-                        userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepPosition.getVideoURL());
-                        userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepPosition.getThumbnailURL());
-                        context.startActivity(userClick);
-
+                    listener.replaceFragment(stepPosition);
                 }
             });
 
         }
-
-
     }
 
     public StepsAdapter.StepsViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -84,6 +83,7 @@ public class StepsAdapter extends
     public int getItemCount() {
         return mSteps.size();
     }
+
     /*
    Logic to determine if the app is running on a tablet.
     */
@@ -98,4 +98,8 @@ public class StepsAdapter extends
                 .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
         return (xlarge || large);
     }
+    public void replaceFragment(){
+
+    }
+
 }

@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.phil.forgoodnessbakes.Models.Step;
+import com.example.phil.forgoodnessbakes.fragments.DetailActivityFragment;
+
 import butterknife.ButterKnife;
 
-public class StepDetailActivity extends AppCompatActivity  {
+public class StepDetailActivity extends AppCompatActivity implements FragmentInterface {
 
 
 
@@ -24,5 +27,14 @@ public class StepDetailActivity extends AppCompatActivity  {
     }
 
 
+    @Override
+    public void replaceFragment(Step stepModel) {
+        DetailActivityFragment detailActivityFragment = (DetailActivityFragment)
+                getSupportFragmentManager().findFragmentById(R.id.detail_container);
 
+        if (detailActivityFragment != null) {
+            detailActivityFragment.updateDetailView();
+
+        }
+    }
 }

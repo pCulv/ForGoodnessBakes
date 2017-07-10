@@ -38,7 +38,7 @@ public class YellowCakeActivity extends AppCompatActivity {
     @BindView(R.id.yellow_cake_recipe_view) ImageView yellowCakeImage;
     @BindView(R.id.yellow_cake_ingredients_rv) RecyclerView yellowCakeRV;
     @BindView(R.id.yellow_cake_steps_rv) RecyclerView yellowCakeStepsRV;
-
+    FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
     Toolbar toolbar;
@@ -87,7 +87,7 @@ public class YellowCakeActivity extends AppCompatActivity {
         yellowCakeStepsRV.setLayoutManager(stepsLayoutManager);
         yellowCakeStepsRV.setHasFixedSize(true);
 
-        stepsAdapter = new StepsAdapter(YellowCakeActivity.this, mSteps);
+        stepsAdapter = new StepsAdapter(YellowCakeActivity.this, mSteps, listener);
         yellowCakeStepsRV.setAdapter(stepsAdapter);
 
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(yellowCakeStepsRV.getContext(),

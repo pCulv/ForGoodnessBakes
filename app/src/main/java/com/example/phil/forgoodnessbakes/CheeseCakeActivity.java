@@ -37,7 +37,7 @@ public class CheeseCakeActivity extends AppCompatActivity {
     @BindView(R.id.cheeseimage) ImageView cheeseCakeImage;
     @BindView(R.id.cheese_cake_ingredients_rv) RecyclerView ingredientsRV;
     @BindView(R.id.cheese_cake_steps_rv) RecyclerView stepsRV;
-
+    FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
     Toolbar toolbar;
@@ -87,7 +87,7 @@ public class CheeseCakeActivity extends AppCompatActivity {
         stepsRV.setLayoutManager(stepsLayoutManager);
         stepsRV.setHasFixedSize(true);
 
-        stepsAdapter = new StepsAdapter(CheeseCakeActivity.this, mSteps);
+        stepsAdapter = new StepsAdapter(CheeseCakeActivity.this, mSteps, listener);
         stepsRV.setAdapter(stepsAdapter);
 
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(stepsRV.getContext(),
