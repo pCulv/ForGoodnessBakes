@@ -1,7 +1,6 @@
 package com.example.phil.forgoodnessbakes.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 
 import com.example.phil.forgoodnessbakes.FragmentInterface;
 import com.example.phil.forgoodnessbakes.Models.Step;
-import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.R;
-import com.example.phil.forgoodnessbakes.StepDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +36,6 @@ public class StepsAdapter extends
             super(itemView);
 
             shortDescriptionTextView = (TextView) itemView.findViewById(R.id.shortDescription_tv);
-            shortDescriptionTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Step stepPosition = mSteps.get(getAdapterPosition());
-                    Context context = itemView.getContext();
-
-                    Intent userClick = new Intent(context, StepDetailActivity.class);
-                    userClick.putExtra(JSONKeys.KEY_DESCRIPTION, stepPosition.getDescription());
-                    userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepPosition.getVideoURL());
-                    userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepPosition.getThumbnailURL());
-                    context.startActivity(userClick);
-
-                    listener.replaceFragment(stepPosition);
-                }
-            });
-
         }
     }
 
@@ -73,10 +54,16 @@ public class StepsAdapter extends
     public void onBindViewHolder(StepsAdapter.StepsViewHolder holder, int position) {
 
         final Step step = mSteps.get(position);
-        // display short description of recipe in
+        final String videoUrl = step.getVideoURL();
+        final String description = step.getDescription();
+        // display short description of recipe
         holder.shortDescriptionTextView.setText(step.getShortDescription());
-
-
+        holder.shortDescriptionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.handleClick(step, videoUrl, description);
+            }
+        });
     }
 
     @Override
@@ -85,8 +72,8 @@ public class StepsAdapter extends
     }
 
     /*
-   Logic to determine if the app is running on a tablet.
-    */
+    Logic to determine if the app is running on a tablet.
+     */
     private boolean isTablet(Context context) {
         boolean xlarge = ((context.getResources()
                 .getConfiguration()
@@ -98,8 +85,4 @@ public class StepsAdapter extends
                 .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
         return (xlarge || large);
     }
-    public void replaceFragment(){
-
-    }
-
 }

@@ -1,6 +1,5 @@
 package com.example.phil.forgoodnessbakes.fragments;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.phil.forgoodnessbakes.DetailActivity;
+import com.example.phil.forgoodnessbakes.FragmentInterface;
+import com.example.phil.forgoodnessbakes.Models.Step;
 import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.R;
-import com.example.phil.forgoodnessbakes.StepDetailActivity;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -39,22 +40,22 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class DetailActivityFragment extends Fragment implements ExoPlayer.EventListener{
-    private static final java.lang.String TAG = StepDetailActivity.class.getSimpleName();
+
+public class DetailFragment extends Fragment implements ExoPlayer.EventListener{
+    private static final java.lang.String TAG = DetailActivity.class.getSimpleName();
     @BindView(R.id.stepDescription)
     TextView stepDescription;
     @BindView(R.id.playerView)
     SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
-
+    FragmentInterface listener;
+    private String mVideoUrl;
+    private Step mStepModal;
 
     private static MediaSessionCompat mMediaSession;
 
-    public DetailActivityFragment() {
+    public DetailFragment() {
     }
 
     @Override
@@ -64,11 +65,38 @@ public class DetailActivityFragment extends Fragment implements ExoPlayer.EventL
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
         ButterKnife.bind(this, view);
 
+        // if bundle is coming from fragment for two pane layout
+        if (getArguments() != null) {
 
-        updateDetailView();
+            String description = getArguments().getString(JSONKeys.KEY_DESCRIPTION);
+            mVideoUrl = getArguments().getString(JSONKeys.KEY_VIDEO_URL);
+            mStepModal = getArguments().getParcelable(JSONKeys.KEY_STEPS);
+            stepDescription.setText(description);
+
+        }else {
+            // if bundle is coming from single pane layout
+//            Intent userClick = getActivity().getIntent();
+//            Bundle bundle = userClick.getExtras();
+//            mVideoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
+//            String description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
+//            stepDescription.setText(description);
+
+        }
+
+
+            if (Objects.equals(mVideoUrl, "")) {
+                Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
+            }
+
+            Uri mMediaUri = Uri.parse(mVideoUrl);
+            SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
+
+            simpleExoPlayerView.setPlayer(mExoPlayer);
+
+            initializePlayer(mMediaUri);
+
+
         initializeMediaSession();
-
-
 
         return view;
     }
@@ -96,25 +124,7 @@ public class DetailActivityFragment extends Fragment implements ExoPlayer.EventL
 
     public void updateDetailView() {
 
-        String description;
-        Intent userClick = getActivity().getIntent();
-        Bundle bundle = userClick.getExtras();
-        String videoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
-        description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
-        stepDescription.setText(description);
 
-
-
-        if (Objects.equals(videoUrl, "")) {
-            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
-        }
-
-        Uri mMediaUri = Uri.parse(videoUrl);
-        SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
-
-        simpleExoPlayerView.setPlayer(mExoPlayer);
-
-        initializePlayer(mMediaUri);
     }
 
     private void initializeMediaSession() {

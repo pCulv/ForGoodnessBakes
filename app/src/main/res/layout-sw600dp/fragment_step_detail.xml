@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.phil.forgoodnessbakes.fragments.DetailActivityFragment"
-    tools:showIn="@layout/activity_step_detail">
+    tools:context="com.example.phil.forgoodnessbakes.fragments.DetailFragment"
+    >
 
     <TextView
         android:id="@+id/textView"

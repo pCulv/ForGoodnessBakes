@@ -56,6 +56,13 @@ public class NutellaFragment extends Fragment {
 
     private static final String TAG = NutellaActivity.class.getSimpleName();
 
+    public static NutellaFragment newInstance(FragmentInterface listener) {
+        NutellaFragment mainFragment = new NutellaFragment();
+        mainFragment.listener = listener;
+        return mainFragment;
+    }
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -117,7 +124,6 @@ public class NutellaFragment extends Fragment {
                 new DividerItemDecoration(stepsRecyclerView.getContext(),
                 stepsLayoutManager.getOrientation());
         stepsRecyclerView.addItemDecoration(mDividerItemDecoration);
-
 
         return view;
 

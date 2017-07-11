@@ -5,6 +5,6 @@ import com.example.phil.forgoodnessbakes.Models.Step;
 
 
 public interface FragmentInterface {
-    void replaceFragment(Step stepModel);
+    void handleClick(Step stepModel, String videoUrl, String description);
 
 }
