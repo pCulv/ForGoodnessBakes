@@ -1,5 +1,6 @@
 package com.example.phil.forgoodnessbakes.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class DetailFragment extends Fragment implements ExoPlayer.EventListener{
+public class DetailFragment extends Fragment implements ExoPlayer.EventListener {
     private static final java.lang.String TAG = DetailActivity.class.getSimpleName();
     @BindView(R.id.stepDescription)
     TextView stepDescription;
@@ -73,33 +74,32 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener{
             mStepModal = getArguments().getParcelable(JSONKeys.KEY_STEPS);
             stepDescription.setText(description);
 
-        }else {
+        } else {
             // if bundle is coming from single pane layout
-//            Intent userClick = getActivity().getIntent();
-//            Bundle bundle = userClick.getExtras();
-//            mVideoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
-//            String description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
-//            stepDescription.setText(description);
+            Intent userClick = getActivity().getIntent();
+            Bundle bundle = userClick.getExtras();
+            mVideoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
+            String description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
+            stepDescription.setText(description);
 
         }
+        //if step does not have a url attached
+        if (Objects.equals(mVideoUrl, "")) {
+            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
+        }
 
+        Uri mMediaUri = Uri.parse(mVideoUrl);
+        SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
 
-            if (Objects.equals(mVideoUrl, "")) {
-                Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
-            }
+        simpleExoPlayerView.setPlayer(mExoPlayer);
 
-            Uri mMediaUri = Uri.parse(mVideoUrl);
-            SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
-
-            simpleExoPlayerView.setPlayer(mExoPlayer);
-
-            initializePlayer(mMediaUri);
-
+        initializePlayer(mMediaUri);
 
         initializeMediaSession();
 
         return view;
     }
+
     private void initializePlayer(Uri mediaUri) {
         if (mExoPlayer == null) {
             // Create an instance of the ExoPlayer.
@@ -116,7 +116,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener{
             String userAgent = Util.getUserAgent(this.getActivity(), "ForGoodnessBakes");
             MediaSource mediaSource =
                     new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                    this.getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
+                            this.getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(true);
         }
@@ -191,10 +191,10 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener{
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
+        if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     mExoPlayer.getCurrentPosition(), 1f);
-        } else if((playbackState == ExoPlayer.STATE_READY)){
+        } else if ((playbackState == ExoPlayer.STATE_READY)) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     mExoPlayer.getCurrentPosition(), 1f);
         }
@@ -211,6 +211,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener{
     public void onPositionDiscontinuity() {
 
     }
+
     private class MySessionCallback extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {

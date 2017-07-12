@@ -37,10 +37,10 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
 
         if(findViewById(R.id.detail_container) != null) {
             mTabletMode = true;
-            DetailFragment detailActivityFragment = new DetailFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.detail_container, detailActivityFragment).commit();
+//            DetailFragment detailActivityFragment = new DetailFragment();
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.detail_container, detailActivityFragment).commit();
             Toast.makeText(this, "You're in tablet mode!", Toast.LENGTH_SHORT).show();
         }
     }
