@@ -84,6 +84,7 @@ public class NutellaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nutella, container, false);
         ButterKnife.bind(this, view);
 
+
         Picasso.with(this.getActivity())
                 .load(R.drawable.nutella_pie)
                 .resize(1024, 500)

@@ -2,10 +2,8 @@ package com.example.phil.forgoodnessbakes;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.Models.Step;
 import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
@@ -23,31 +21,25 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutella);
         ButterKnife.bind(this);
+//
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         NutellaFragment nutellaFragment = NutellaFragment.newInstance(this);
         getSupportFragmentManager()
                 .beginTransaction().replace(R.id.nutella_container, nutellaFragment).commit();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
         if(findViewById(R.id.detail_container) != null) {
             mTabletMode = true;
-//            DetailFragment detailActivityFragment = new DetailFragment();
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.detail_container, detailActivityFragment).commit();
-            Toast.makeText(this, "You're in tablet mode!", Toast.LENGTH_SHORT).show();
         }
     }
     public boolean isTablet() {
         return mTabletMode;
     }
-
+//    Uri elements parsed from JSON response and passed to @DetailFragment
     private void replaceFragment(Step stepModal, String videoUrl, String description) {
         Bundle args = new Bundle();
         args.putParcelable(JSONKeys.KEY_STEPS, stepModal);
