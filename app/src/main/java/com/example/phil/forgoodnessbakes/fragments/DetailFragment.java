@@ -93,41 +93,11 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
         simpleExoPlayerView.setPlayer(mExoPlayer);
 
-        initializePlayer(mMediaUri);
-
         initializeMediaSession();
-
+        initializePlayer(mMediaUri);
         return view;
-    }
 
-    private void initializePlayer(Uri mediaUri) {
-        if (mExoPlayer == null) {
-            // Create an instance of the ExoPlayer.
-            TrackSelector trackSelector = new DefaultTrackSelector();
-            LoadControl loadControl = new DefaultLoadControl();
-            mExoPlayer = ExoPlayerFactory
-                    .newSimpleInstance(this.getActivity(), trackSelector, loadControl);
-            mPlayerView.setPlayer(mExoPlayer);
-
-            // Set the ExoPlayer.EventListener to this activity.
-            mExoPlayer.addListener(this);
-
-            // Prepare the MediaSource.
-            String userAgent = Util.getUserAgent(this.getActivity(), "ForGoodnessBakes");
-            MediaSource mediaSource =
-                    new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                            this.getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
-            mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
-        }
-    }
-
-    public void updateDetailView() {
-
-
-    }
-
-    private void initializeMediaSession() {
+    }private void initializeMediaSession() {
 
         // Create a MediaSessionCompat.
         mMediaSession = new MediaSessionCompat(this.getActivity(), TAG);
@@ -158,6 +128,30 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         mMediaSession.setActive(true);
 
     }
+
+    private void initializePlayer(Uri mediaUri) {
+        if (mExoPlayer == null) {
+            // Create an instance of the ExoPlayer.
+            TrackSelector trackSelector = new DefaultTrackSelector();
+            LoadControl loadControl = new DefaultLoadControl();
+            mExoPlayer = ExoPlayerFactory
+                    .newSimpleInstance(this.getActivity(), trackSelector, loadControl);
+            mPlayerView.setPlayer(mExoPlayer);
+
+            // Set the ExoPlayer.EventListener to this activity.
+            mExoPlayer.addListener(this);
+
+            // Prepare the MediaSource.
+            String userAgent = Util.getUserAgent(this.getActivity(), "ForGoodnessBakes");
+            MediaSource mediaSource =
+                    new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+                            this.getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
+            mExoPlayer.prepare(mediaSource);
+            mExoPlayer.setPlayWhenReady(true);
+        }
+    }
+
+
 
     // Release ExoPlayer.
 
