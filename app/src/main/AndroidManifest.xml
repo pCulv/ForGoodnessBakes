@@ -25,7 +25,7 @@
             android:name=".NutellaActivity"
             android:label="@string/nutella_cake"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -41,7 +41,7 @@
             android:name=".BrownieActivity"
             android:label="@string/title_activity_brownie"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/CollapsingToolBarTheme">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.phil.forgoodnessbakes.MainActivity" />
@@ -50,7 +50,7 @@
             android:name=".YellowCakeActivity"
             android:label="@string/title_activity_yellow_cake"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/CollapsingToolBarTheme">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.phil.forgoodnessbakes.MainActivity" />
@@ -59,7 +59,7 @@
             android:name=".CheeseCakeActivity"
             android:label="@string/title_activity_cheese_cake"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/CollapsingToolBarTheme">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.phil.forgoodnessbakes.MainActivity" />
