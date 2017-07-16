@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.example.phil.forgoodnessbakes.Models.Step;
-import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
+import com.example.phil.forgoodnessbakes.models.Step;
+import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.fragments.BrownieActivityFragment;
 import com.example.phil.forgoodnessbakes.fragments.DetailFragment;
 

@@ -1,4 +1,4 @@
-package com.example.phil.forgoodnessbakes.Models;
+package com.example.phil.forgoodnessbakes.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

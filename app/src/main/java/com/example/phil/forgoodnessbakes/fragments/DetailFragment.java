@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.DetailActivity;
 import com.example.phil.forgoodnessbakes.FragmentInterface;
-import com.example.phil.forgoodnessbakes.Models.Step;
-import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
+import com.example.phil.forgoodnessbakes.models.Step;
+import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;

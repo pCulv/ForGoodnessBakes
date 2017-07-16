@@ -1,4 +1,4 @@
-package com.example.phil.forgoodnessbakes.Adapters;
+package com.example.phil.forgoodnessbakes.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.phil.forgoodnessbakes.FragmentInterface;
-import com.example.phil.forgoodnessbakes.Models.Step;
+import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.R;
 
 import java.util.ArrayList;

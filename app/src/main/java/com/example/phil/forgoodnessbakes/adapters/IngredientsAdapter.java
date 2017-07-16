@@ -1,4 +1,4 @@
-package com.example.phil.forgoodnessbakes.Adapters;
+package com.example.phil.forgoodnessbakes.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.phil.forgoodnessbakes.Models.Ingredient;
+import com.example.phil.forgoodnessbakes.models.Ingredient;
 import com.example.phil.forgoodnessbakes.R;
 
 import java.util.ArrayList;

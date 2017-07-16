@@ -15,13 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.phil.forgoodnessbakes.Adapters.IngredientsAdapter;
-import com.example.phil.forgoodnessbakes.Adapters.StepsAdapter;
+import com.example.phil.forgoodnessbakes.adapters.IngredientsAdapter;
+import com.example.phil.forgoodnessbakes.adapters.StepsAdapter;
 import com.example.phil.forgoodnessbakes.FragmentInterface;
-import com.example.phil.forgoodnessbakes.Models.Ingredient;
-import com.example.phil.forgoodnessbakes.Models.Step;
-import com.example.phil.forgoodnessbakes.NetworkUtils.InternetConnection;
-import com.example.phil.forgoodnessbakes.NetworkUtils.JSONKeys;
+import com.example.phil.forgoodnessbakes.models.Ingredient;
+import com.example.phil.forgoodnessbakes.models.Step;
+import com.example.phil.forgoodnessbakes.networkUtils.InternetConnection;
+import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.R;
 import com.squareup.picasso.Picasso;
 

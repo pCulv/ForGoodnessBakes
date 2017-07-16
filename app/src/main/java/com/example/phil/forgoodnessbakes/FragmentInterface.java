@@ -1,6 +1,6 @@
 package com.example.phil.forgoodnessbakes;
 
-import com.example.phil.forgoodnessbakes.Models.Step;
+import com.example.phil.forgoodnessbakes.models.Step;
 
 
 

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.example.phil.forgoodnessbakes.BrownieActivity;
 import com.example.phil.forgoodnessbakes.CheeseCakeActivity;
-import com.example.phil.forgoodnessbakes.Models.RecipeModel;
+import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.NutellaActivity;
 import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.YellowCakeActivity;

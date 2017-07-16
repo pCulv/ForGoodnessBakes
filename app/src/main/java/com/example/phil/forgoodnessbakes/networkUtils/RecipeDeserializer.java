@@ -1,6 +1,6 @@
-package com.example.phil.forgoodnessbakes.NetworkUtils;
+package com.example.phil.forgoodnessbakes.networkUtils;
 
-import com.example.phil.forgoodnessbakes.Models.RecipeModel;
+import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

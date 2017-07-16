@@ -1,4 +1,4 @@
-package com.example.phil.forgoodnessbakes.NetworkUtils;
+package com.example.phil.forgoodnessbakes.networkUtils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
