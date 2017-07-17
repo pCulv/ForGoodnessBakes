@@ -12,7 +12,7 @@ import com.example.phil.forgoodnessbakes.R;
 /**
  * Implementation of App Widget functionality.
  */
-public class WidgetProvider extends AppWidgetProvider {
+public class WidgetProvider extends AppWidgetProvider  {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -47,6 +47,7 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteViews.setEmptyView(R.id.widget_list_view, R.id.empty_view);
         return remoteViews;
     }
+
 
 
 }

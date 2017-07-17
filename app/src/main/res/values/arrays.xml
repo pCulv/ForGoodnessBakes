@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_recipe_option_labels">
+        <item>@string/nutella_pie</item>
+        <item>@string/brownies</item>
+        <item>@string/yellow_cake</item>
+        <item>@string/cheese_cake</item>
+    </array>
+
+    <array name="pref_recipe_option_values">
+        <item>@string/pref_recipe_nutella_value</item>
+        <item>@string/pref_recipe_brownie_value</item>
+        <item>@string/pref_recipe_yellcake_value</item>
+        <item>@string/pref_recipe_cheesecake_value</item>
+    </array>
+
+</resources>

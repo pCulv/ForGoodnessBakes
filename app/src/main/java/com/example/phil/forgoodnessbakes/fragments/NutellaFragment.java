@@ -134,7 +134,7 @@ public class NutellaFragment extends Fragment {
 
     }
 
-    private void getIngredients() {
+    public void getIngredients() {
         // parse json and retrieve ingredients.
         try {
             run();

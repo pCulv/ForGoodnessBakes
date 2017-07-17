@@ -4,7 +4,6 @@
     android:initialLayout="@layout/widget_provider"
     android:minHeight="220dp"
     android:minWidth="220dp"
-    android:configure="com.example.phil.forgoodnessbakes.widget.WidgetProviderConfigureActivity"
     android:previewImage="@drawable/screenshot"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
