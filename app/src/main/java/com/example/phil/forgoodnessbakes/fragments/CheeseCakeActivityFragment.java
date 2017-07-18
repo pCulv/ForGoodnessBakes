@@ -282,7 +282,6 @@ public class CheeseCakeActivityFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.add_to_widget) {
-            //Todo add to shared prefs
             SharedPreferences prefs = getActivity().getSharedPreferences(MY_KEY, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             Gson gson = new Gson();
