@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -295,13 +294,18 @@ public class NutellaFragment extends Fragment {
 
         if (id == R.id.add_to_widget) {
             //Todo add to shared prefs
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            SharedPreferences prefs =
+                    getActivity().getSharedPreferences(MY_KEY, Context.MODE_PRIVATE);
+            SharedPreferences title_pref =
+                    getActivity().getSharedPreferences("Widget Title", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
+
             Gson gson = new Gson();
             String ingredientsJson = gson.toJson(mIngredients);
             editor.putString(MY_KEY, ingredientsJson);
             editor.apply();
             //how should I add ingredients list?
+            Toast.makeText(this.getActivity(), "Nutella Pie Ingredients added to widget", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);

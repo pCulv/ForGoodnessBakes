@@ -1,6 +1,7 @@
 package com.example.phil.forgoodnessbakes.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,19 +12,23 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.phil.forgoodnessbakes.FragmentInterface;
+import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.adapters.IngredientsAdapter;
 import com.example.phil.forgoodnessbakes.adapters.StepsAdapter;
-import com.example.phil.forgoodnessbakes.FragmentInterface;
 import com.example.phil.forgoodnessbakes.models.Ingredient;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.InternetConnection;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
-import com.example.phil.forgoodnessbakes.R;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -58,7 +63,7 @@ public class CheeseCakeActivityFragment extends Fragment {
     private ArrayList<Step> mSteps = new ArrayList<>();
     public String recipesUrl =
             "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-
+    private static final String MY_KEY = "Recipe List";
     public static CheeseCakeActivityFragment newInstance(FragmentInterface listener) {
         CheeseCakeActivityFragment mainFragment = new CheeseCakeActivityFragment();
         mainFragment.listener = listener;
@@ -83,6 +88,7 @@ public class CheeseCakeActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cheese_cake, container, false);
+        setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
 
         if (!isTablet(this.getActivity())) {
@@ -264,5 +270,29 @@ public class CheeseCakeActivityFragment extends Fragment {
                 .screenLayout & Configuration
                 .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
         return (xlarge || large);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_cheese_cake, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.add_to_widget) {
+            //Todo add to shared prefs
+            SharedPreferences prefs = getActivity().getSharedPreferences(MY_KEY, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            Gson gson = new Gson();
+            String ingredientsJson = gson.toJson(mIngredients);
+            editor.putString(MY_KEY, ingredientsJson);
+            editor.apply();
+            //how should I add ingredients list?
+            Toast.makeText(this.getActivity(), "Brownie Ingredients added to widget", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

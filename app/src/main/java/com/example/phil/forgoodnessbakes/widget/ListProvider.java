@@ -40,35 +40,30 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
         int appWidgetId = mIntent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
+        if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
 
+            //retrieve shared prefs
+            SharedPreferences sharedPreferences =
+                    mContext.getSharedPreferences(MY_KEY, Context.MODE_PRIVATE);
+            String dataJson = sharedPreferences.getString(MY_KEY, "");
 
-        //retrieve shared prefs
-        SharedPreferences sharedPreferences =
-                mContext.getSharedPreferences(MY_KEY, Context.MODE_PRIVATE);
-        String dataJson = sharedPreferences.getString(MY_KEY, "");
+            Gson gson = new Gson();
+            final ArrayList<Ingredient> ingredientArrayList =
+                    gson.fromJson(dataJson, new TypeToken<ArrayList<Ingredient>>() {
+                    }.getType());
 
-        Gson gson = new Gson();
-        final ArrayList<Ingredient> ingredientArrayList = gson.fromJson(dataJson, new TypeToken<ArrayList<Ingredient>>() {
-        }.getType());
+            String[] ingredients = new String[ingredientArrayList.size()];
 
-        String[] ingredients = new String[ingredientArrayList.size()];
+            for (int i = 0; i < ingredients.length; i++) {
+                Ingredient ingredientObj = ingredientArrayList.get(i);
+                ingredients[i] = String.valueOf(ingredientObj.getQuantity());
+                ingredients[i] = ingredientObj.getMeasure();
+                ingredients[i] = ingredientObj.getIngredient();
 
-        for (int i=0; i<ingredients.length; i++) {
-            Ingredient ingredientObj = ingredientArrayList.get(i);
-            ingredients[i] = String.valueOf(ingredientObj.getQuantity());
-            ingredients[i] = ingredientObj.getMeasure();
-            ingredients[i] = ingredientObj.getIngredient();
+                mIngredients.add(ingredientObj);
+            }
+
         }
-
-//        for (int i = 0; i < 10; i++) {
-//            Ingredient ingredient = new Ingredient();
-//            ingredient.setQuantity(i);
-//            ingredient.setMeasure("CUP");
-//            ingredient.setIngredient("cake");
-//
-//            mIngredients.add(ingredient);
-//
-//        }
     }
     @Override
     public void onDataSetChanged() {
