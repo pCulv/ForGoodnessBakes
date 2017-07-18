@@ -10,9 +10,10 @@ import android.widget.TextView;
 
 import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.models.Ingredient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class will serve as our ListView adapter for our Ingredients list in the widget
@@ -20,46 +21,60 @@ import java.util.List;
 
 public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
     private TextView recipeTitle;
+    private static final String MY_KEY = "Recipe List";
     private SharedPreferences mSharedPrefs;
     private Context mContext;
-    private List<Ingredient> mIngredients = new ArrayList<>();
+    private Intent mIntent;
+    private ArrayList<Ingredient> mIngredients = new ArrayList<>();
     private String myResponse =
             "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
+    private static final String TAG = ListProvider.class.getSimpleName();
     public ListProvider(Context mContext, Intent intent) {
         this.mContext = mContext;
-        int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
-
-        retrieveSharedPrefs(mContext, appWidgetId);
-
-        for (int i = 0; i < 10; i++) {
-            Ingredient ingredient = new Ingredient();
-            ingredient.setQuantity(i);
-            ingredient.setMeasure("CUP");
-            ingredient.setIngredient("cake");
-
-            mIngredients.add(ingredient);
-
-        }
+        this.mIntent = intent;
     }
 
     @Override
     public void onCreate() {
+        int appWidgetId = mIntent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
 
+
+
+        //retrieve shared prefs
+        SharedPreferences sharedPreferences =
+                mContext.getSharedPreferences(MY_KEY, Context.MODE_PRIVATE);
+        String dataJson = sharedPreferences.getString(MY_KEY, "");
+
+        Gson gson = new Gson();
+        final ArrayList<Ingredient> ingredientArrayList = gson.fromJson(dataJson, new TypeToken<ArrayList<Ingredient>>() {
+        }.getType());
+
+        String[] ingredients = new String[ingredientArrayList.size()];
+
+        for (int i=0; i<ingredients.length; i++) {
+            Ingredient ingredientObj = ingredientArrayList.get(i);
+            ingredients[i] = String.valueOf(ingredientObj.getQuantity());
+            ingredients[i] = ingredientObj.getMeasure();
+            ingredients[i] = ingredientObj.getIngredient();
+        }
+
+//        for (int i = 0; i < 10; i++) {
+//            Ingredient ingredient = new Ingredient();
+//            ingredient.setQuantity(i);
+//            ingredient.setMeasure("CUP");
+//            ingredient.setIngredient("cake");
+//
+//            mIngredients.add(ingredient);
+//
+//        }
     }
     @Override
     public void onDataSetChanged() {
 
     }
 
-    private static String retrieveSharedPrefs(Context context, int appWidgetId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("recipeList", Context.MODE_PRIVATE);
-
-        String recipe = sharedPreferences.getString("recipe", "");
-        return recipe;
-
-    }
 
     @Override
     public void onDestroy() {

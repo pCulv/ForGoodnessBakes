@@ -25,9 +25,7 @@
     <string name="pref_recipe_brownie_value" translatable="false">Brownie</string>
     <string name="pref_recipe_yellcake_value" translatable="false">Yellow Cake</string>
     <string name="pref_recipe_cheesecake_value" translatable="false">Cheese Cake</string>
-
-
-
+    <string name="add_to_widget">Add to Widget</string>
 
 
 </resources>

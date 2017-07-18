@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.example.phil.forgoodnessbakes.models.Step;
-import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.fragments.DetailFragment;
 import com.example.phil.forgoodnessbakes.fragments.NutellaFragment;
+import com.example.phil.forgoodnessbakes.models.Step;
+import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 
 import butterknife.ButterKnife;
 
@@ -69,4 +69,6 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
             launchDetailActivity(stepModel);
         }
     }
+
+
 }
