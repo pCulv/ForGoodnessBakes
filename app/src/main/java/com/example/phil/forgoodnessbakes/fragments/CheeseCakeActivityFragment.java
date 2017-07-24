@@ -25,6 +25,7 @@ import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.adapters.IngredientsAdapter;
 import com.example.phil.forgoodnessbakes.adapters.StepsAdapter;
 import com.example.phil.forgoodnessbakes.models.Ingredient;
+import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.InternetConnection;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
@@ -59,6 +60,7 @@ public class CheeseCakeActivityFragment extends Fragment {
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
     Toolbar toolbar;
+    RecipeModel mRecipe = new RecipeModel();
     private ArrayList<Ingredient> mIngredients = new ArrayList<>();
     private ArrayList<Step> mSteps = new ArrayList<>();
     public String recipesUrl =
@@ -90,47 +92,60 @@ public class CheeseCakeActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cheese_cake, container, false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
-
+// Displays collapsing toolbar layout only if app is viewed on a mobile device
         if (!isTablet(this.getActivity())) {
 
-            Picasso.with(this.getActivity())
-                    .load(R.drawable.originalcheesecake)
-                    .resize(1024, 500)
-                    .centerCrop()
-                    .error(R.drawable.placeholder)
-                    .into(cheeseCakeImage);
+            if (mRecipe.getImage() != null) {
+                //load image from server
+                Picasso.with(this.getActivity())
+                        .load(recipesUrl)
+                        .resize(1024, 500)
+                        .centerCrop()
+                        .error(R.drawable.placeholder)
+                        .into(cheeseCakeImage);
+            } else {
+                //load local image
+                Picasso.with(this.getActivity())
+                        .load(R.drawable.originalcheesecake)
+                        .resize(1024, 500)
+                        .centerCrop()
+                        .error(R.drawable.placeholder)
+                        .into(cheeseCakeImage);
+            }
         }
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        ingredientsRV.setLayoutManager(linearLayoutManager);
-        ingredientsRV.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+            ingredientsRV.setLayoutManager(linearLayoutManager);
+            ingredientsRV.setHasFixedSize(true);
 
-        ingredientsAdapter = new IngredientsAdapter(this.getActivity(), mIngredients);
+            ingredientsAdapter = new IngredientsAdapter(this.getActivity(), mIngredients);
 
-        ingredientsRV.setAdapter(ingredientsAdapter);
+            ingredientsRV.setAdapter(ingredientsAdapter);
 
-        if (InternetConnection.checkConnection(this.getActivity())) {
-            getIngredients();
-            getSteps();
-        }else {
-            Toast.makeText(this.getActivity(), "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
+            if (InternetConnection.checkConnection(this.getActivity())) {
+                getIngredients();
+                getSteps();
+            } else {
+                Toast.makeText(this.getActivity(), "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
 
+            }
+
+
+            // setup recyclerview for steps
+            LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this.getActivity());
+            stepsRV.setLayoutManager(stepsLayoutManager);
+            stepsRV.setHasFixedSize(true);
+
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
+            stepsRV.setAdapter(stepsAdapter);
+
+            DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(stepsRV.getContext(),
+                    stepsLayoutManager.getOrientation());
+            stepsRV.addItemDecoration(mDividerItemDecoration);
+            return view;
         }
 
 
-        // setup recyclerview for steps
-        LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this.getActivity());
-        stepsRV.setLayoutManager(stepsLayoutManager);
-        stepsRV.setHasFixedSize(true);
-
-        stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
-        stepsRV.setAdapter(stepsAdapter);
-
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(stepsRV.getContext(),
-                stepsLayoutManager.getOrientation());
-        stepsRV.addItemDecoration(mDividerItemDecoration);
-        return view;
-    }
     private void getIngredients() {
         // parse json and retrieve ingredients.
         try {

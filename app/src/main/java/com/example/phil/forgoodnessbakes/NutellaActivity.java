@@ -2,6 +2,8 @@ package com.example.phil.forgoodnessbakes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,22 +12,21 @@ import com.example.phil.forgoodnessbakes.fragments.NutellaFragment;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NutellaActivity extends AppCompatActivity implements FragmentInterface {
     Toolbar toolbar;
     private Boolean mTabletMode = false;
+    @Nullable @BindView(R.id.nutella_scroll)
+    NestedScrollView mScrollView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutella);
         ButterKnife.bind(this);
-//
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         NutellaFragment nutellaFragment = NutellaFragment.newInstance(this);
         getSupportFragmentManager()
@@ -36,6 +37,30 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
             mTabletMode = true;
         }
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//
+//        if (mScrollView != null) {
+//            outState.putIntArray("SCROLL_POSITION",
+//                    new int[]{ mScrollView.getScrollX(), mScrollView.getScrollY()});
+//        }
+//    }
+////
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        final int[] position = savedInstanceState.getIntArray("SCROLL_POSITION");
+//        if (position != null)
+//            mScrollView.post(new Runnable() {
+//                public void run() {
+//                    mScrollView.scrollTo(position[0], position[1]);
+//                }
+//            });
+//    }
+
+
     public boolean isTablet() {
         return mTabletMode;
     }

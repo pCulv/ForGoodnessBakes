@@ -6,14 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.phil.forgoodnessbakes.FragmentInterface;
-import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.R;
+import com.example.phil.forgoodnessbakes.models.Step;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class StepsAdapter extends
@@ -31,11 +34,15 @@ public class StepsAdapter extends
 
     public class StepsViewHolder extends RecyclerView.ViewHolder {
         TextView shortDescriptionTextView;
+        ImageView thumbnail;
 
         public StepsViewHolder(final View itemView) {
             super(itemView);
 
             shortDescriptionTextView = (TextView) itemView.findViewById(R.id.shortDescription_tv);
+            thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
+
+
         }
     }
 
@@ -56,8 +63,19 @@ public class StepsAdapter extends
         final Step step = mSteps.get(position);
         final String videoUrl = step.getVideoURL();
         final String description = step.getDescription();
+        final String thumbnailUrl = step.getThumbnailURL();
         // display short description of recipe
         holder.shortDescriptionTextView.setText(step.getShortDescription());
+        //if thumbnail url is empty then do not load an image
+        if (Objects.equals(thumbnailUrl, "")) {
+            //do nothing
+        }else {
+            //load image from thumbnail url received from the server
+            Picasso.with(mContext)
+                    .load(thumbnailUrl)
+                    .into(holder.thumbnail);
+        }
+
         holder.shortDescriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +83,7 @@ public class StepsAdapter extends
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

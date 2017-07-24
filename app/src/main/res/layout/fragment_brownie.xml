@@ -56,11 +56,12 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/brownie_ingredients_rv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/brownie_ingredients_tv"
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="@dimen/text_margin"
+                android:layout_marginEnd="@dimen/text_margin"
                 />
 
             <TextView
@@ -76,10 +77,12 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/brownie_steps_rv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/brownie_steps_tv"
                 android:layout_marginStart="@dimen/text_margin"
+                android:layout_marginEnd="@dimen/text_margin"
+
                 />
 
 

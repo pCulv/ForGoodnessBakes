@@ -85,7 +85,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         }
         //if step does not have a url attached
         if (Objects.equals(mVideoUrl, "")) {
-            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_SHORT).show();
         }
 
         Uri mMediaUri = Uri.parse(mVideoUrl);
@@ -166,6 +166,12 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         super.onDestroy();
         releasePlayer();
         mMediaSession.setActive(false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mExoPlayer.release();
     }
 
     @Override

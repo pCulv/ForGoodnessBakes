@@ -19,6 +19,9 @@ public class RecipeModel implements Parcelable
 
     private Step[] steps;
 
+    public RecipeModel() {
+    }
+
     public RecipeModel(Parcel in) {
         id = in.readString();
         servings = in.readString();

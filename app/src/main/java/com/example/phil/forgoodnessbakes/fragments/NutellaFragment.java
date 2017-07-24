@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.adapters.IngredientsAdapter;
 import com.example.phil.forgoodnessbakes.adapters.StepsAdapter;
 import com.example.phil.forgoodnessbakes.models.Ingredient;
+import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.InternetConnection;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
@@ -47,14 +49,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class NutellaFragment extends Fragment {
-    @Nullable @BindView(R.id.nutella_image)
-    ImageView nutellaCakeImage;
-    @BindView(R.id.nutella_ingredients_rv)
-    RecyclerView ingredientsRecyclerView;
+    @Nullable @BindView(R.id.nutella_image) ImageView nutellaCakeImage;
+    @BindView(R.id.nutella_ingredients_rv) RecyclerView ingredientsRecyclerView;
     @BindView(R.id.nutella_steps_rv) RecyclerView stepsRecyclerView;
+    @Nullable @BindView(R.id.nutella_scroll) NestedScrollView mScrollView;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+    RecipeModel mRecipe = new RecipeModel();
     private ArrayList<Ingredient> mIngredients = new ArrayList<>();
     private ArrayList<Step> mSteps = new ArrayList<>();
     public String recipesUrl =
@@ -83,6 +86,9 @@ public class NutellaFragment extends Fragment {
     public NutellaFragment() {
     }
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -93,50 +99,75 @@ public class NutellaFragment extends Fragment {
 // Displays collapsing toolbar layout only if app is viewed on a mobile device
         if (!isTablet(this.getActivity())) {
 
-            Picasso.with(this.getActivity())
-                    .load(R.drawable.nutella_pie)
-                    .resize(1024, 500)
-                    .centerCrop()
-                    .error(R.drawable.placeholder)
-                    .into(nutellaCakeImage);
-        }
-
-
-        // setup recyclerview for ingredients
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
-        ingredientsRecyclerView.setHasFixedSize(true);
-
-        ingredientsAdapter = new IngredientsAdapter(this.getActivity(), mIngredients);
-
-        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
-
-        if (InternetConnection.checkConnection(this.getActivity())) {
-            getIngredients();
-            getSteps();
-        }else {
-            Toast.makeText(this
-                    .getActivity(), "Internet Connection Not Available", Toast.LENGTH_SHORT)
-                    .show();
+            if (mRecipe.getImage() != null) {
+                //load image from server
+                Picasso.with(this.getActivity())
+                        .load(recipesUrl)
+                        .resize(1024, 500)
+                        .centerCrop()
+                        .error(R.drawable.placeholder)
+                        .into(nutellaCakeImage);
+            } else {
+                //load local image
+                Picasso.with(this.getActivity())
+                        .load(R.drawable.nutella_pie)
+                        .resize(1024, 500)
+                        .centerCrop()
+                        .error(R.drawable.placeholder)
+                        .into(nutellaCakeImage);
+            }
 
         }
+            // setup recyclerview for ingredients
 
-        // setup recyclerview for steps
-        LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this.getActivity());
-        stepsRecyclerView.setLayoutManager(stepsLayoutManager);
-        stepsRecyclerView.setHasFixedSize(true);
+            ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
+            ingredientsRecyclerView.setHasFixedSize(true);
 
-        stepsAdapter = new StepsAdapter(this.getActivity(), mSteps,  listener);
+            ingredientsAdapter = new IngredientsAdapter(this.getActivity(), mIngredients);
+
+            ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+
+            //Checks to make sure there is an internet connection available before running network requests
+            if (InternetConnection.checkConnection(this.getActivity())) {
+                getIngredients();
+                getSteps();
+            } else {
+                Toast.makeText(this
+                        .getActivity(), "Internet Connection Not Available", Toast.LENGTH_SHORT)
+                        .show();
+
+            }
+
+            // setup recyclerview for steps
+            LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this.getActivity());
+            stepsRecyclerView.setLayoutManager(stepsLayoutManager);
+            stepsRecyclerView.setHasFixedSize(true);
+
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
 
 
-        stepsRecyclerView.setAdapter(stepsAdapter);
+            stepsRecyclerView.setAdapter(stepsAdapter);
 
-        DividerItemDecoration mDividerItemDecoration =
-                new DividerItemDecoration(stepsRecyclerView.getContext(),
-                stepsLayoutManager.getOrientation());
-        stepsRecyclerView.addItemDecoration(mDividerItemDecoration);
+            DividerItemDecoration mDividerItemDecoration =
+                    new DividerItemDecoration(stepsRecyclerView.getContext(),
+                            stepsLayoutManager.getOrientation());
+            stepsRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         return view;
+        }
+
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 

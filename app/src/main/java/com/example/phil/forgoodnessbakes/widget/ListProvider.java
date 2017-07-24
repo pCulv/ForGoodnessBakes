@@ -52,17 +52,19 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                     gson.fromJson(dataJson, new TypeToken<ArrayList<Ingredient>>() {
                     }.getType());
 
-            String[] ingredients = new String[ingredientArrayList.size()];
+            if (ingredientArrayList!=null) {
 
-            for (int i = 0; i < ingredients.length; i++) {
-                Ingredient ingredientObj = ingredientArrayList.get(i);
-                ingredients[i] = String.valueOf(ingredientObj.getQuantity());
-                ingredients[i] = ingredientObj.getMeasure();
-                ingredients[i] = ingredientObj.getIngredient();
+                String[] ingredients = new String[ingredientArrayList.size()];
 
-                mIngredients.add(ingredientObj);
+                for (int i = 0; i < ingredients.length; i++) {
+                    Ingredient ingredientObj = ingredientArrayList.get(i);
+                    ingredients[i] = String.valueOf(ingredientObj.getQuantity());
+                    ingredients[i] = ingredientObj.getMeasure();
+                    ingredients[i] = ingredientObj.getIngredient();
+
+                    mIngredients.add(ingredientObj);
+                }
             }
-
         }
     }
     @Override

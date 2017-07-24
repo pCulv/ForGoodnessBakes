@@ -24,6 +24,7 @@ import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.adapters.IngredientsAdapter;
 import com.example.phil.forgoodnessbakes.adapters.StepsAdapter;
 import com.example.phil.forgoodnessbakes.models.Ingredient;
+import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.InternetConnection;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
@@ -58,7 +59,7 @@ public class BrownieActivityFragment extends Fragment {
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
     private static final String MY_KEY = "Recipe List";
-
+    RecipeModel mRecipe = new RecipeModel();
     private ArrayList<Ingredient> mIngredients = new ArrayList<>();
     private ArrayList<Step> mSteps = new ArrayList<>();
     public String recipesUrl =
@@ -89,51 +90,61 @@ public class BrownieActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_brownie, container, false);
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
-
+// Displays collapsing toolbar layout only if app is viewed on a mobile device
         if (!isTablet(this.getActivity())) {
 
-            Picasso.with(this.getActivity())
-                    .load(R.drawable.brownies)
-                    .resize(1024, 500)
-                    .centerCrop()
-                    .error(R.drawable.placeholder)
-                    .into(brownieImage);
-
+            if (mRecipe.getImage() != null) {
+                //load image from server
+                Picasso.with(this.getActivity())
+                        .load(recipesUrl)
+                        .resize(1024, 500)
+                        .centerCrop()
+                        .error(R.drawable.placeholder)
+                        .into(brownieImage);
+            } else {
+                //load local image
+                Picasso.with(this.getActivity())
+                        .load(R.drawable.brownies)
+                        .resize(1024, 500)
+                        .centerCrop()
+                        .error(R.drawable.placeholder)
+                        .into(brownieImage);
+            }
         }
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        brownieRecyclerView.setLayoutManager(linearLayoutManager);
-        brownieRecyclerView.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+            brownieRecyclerView.setLayoutManager(linearLayoutManager);
+            brownieRecyclerView.setHasFixedSize(true);
 
-        ingredientsAdapter = new IngredientsAdapter(this.getActivity(), mIngredients);
+            ingredientsAdapter = new IngredientsAdapter(this.getActivity(), mIngredients);
 
-        brownieRecyclerView.setAdapter(ingredientsAdapter);
+            brownieRecyclerView.setAdapter(ingredientsAdapter);
 
-        if (InternetConnection.checkConnection(this.getActivity())) {
-            getIngredients();
-            getSteps();
-        }else {
-            Toast.makeText(this.getActivity(), "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
+            if (InternetConnection.checkConnection(this.getActivity())) {
+                getIngredients();
+                getSteps();
+            } else {
+                Toast.makeText(this.getActivity(), "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
 
-        }
+            }
 
-        // setup recyclerview for steps
-        LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this.getActivity());
-        brownieStepsRV.setLayoutManager(stepsLayoutManager);
-        brownieStepsRV.setHasFixedSize(true);
+            // setup recyclerview for steps
+            LinearLayoutManager stepsLayoutManager = new LinearLayoutManager(this.getActivity());
+            brownieStepsRV.setLayoutManager(stepsLayoutManager);
+            brownieStepsRV.setHasFixedSize(true);
 
-        stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
-        brownieStepsRV.setAdapter(stepsAdapter);
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
+            brownieStepsRV.setAdapter(stepsAdapter);
 
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(brownieStepsRV.getContext(),
-                stepsLayoutManager.getOrientation());
-        brownieStepsRV.addItemDecoration(mDividerItemDecoration);
-
-
-
+            DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(brownieStepsRV.getContext(),
+                    stepsLayoutManager.getOrientation());
+            brownieStepsRV.addItemDecoration(mDividerItemDecoration);
 
         return view;
-    }
+        }
+
+
+
     private void getIngredients() {
         // parse json and retrieve ingredients.
         try {
@@ -199,7 +210,7 @@ public class BrownieActivityFragment extends Fragment {
 
 
     }
-
+    //Network request for all steps from the server
     void getSteps() {
         try {
             runSteps();
