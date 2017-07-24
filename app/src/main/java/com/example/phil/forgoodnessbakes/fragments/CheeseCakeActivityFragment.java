@@ -304,7 +304,7 @@ public class CheeseCakeActivityFragment extends Fragment {
             editor.putString(MY_KEY, ingredientsJson);
             editor.apply();
             //how should I add ingredients list?
-            Toast.makeText(this.getActivity(), "Brownie Ingredients added to widget", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getActivity(), "Cheese Cake ingredients added to widget", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
