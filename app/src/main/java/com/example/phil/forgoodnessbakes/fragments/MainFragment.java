@@ -13,13 +13,10 @@ import android.widget.ImageView;
 
 import com.example.phil.forgoodnessbakes.BrownieActivity;
 import com.example.phil.forgoodnessbakes.CheeseCakeActivity;
-import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.NutellaActivity;
 import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.YellowCakeActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +24,7 @@ import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment {
 
-    @BindView(R.id.nutella_card_view)
-    CardView nutellaCardView;
+    @BindView(R.id.nutella_card_view) CardView nutellaCardView;
 
     @BindView(R.id.brownie_card_view) CardView brownieCardView;
 
@@ -36,8 +32,7 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.cheese_cake_card_view) CardView cheeseCakeCardView;
 
-    @BindView(R.id.yellow_cake_image)
-    ImageView yellowCakeImage;
+    @BindView(R.id.yellow_cake_image) ImageView yellowCakeImage;
 
     @BindView(R.id.brownies) ImageView browniesImage;
 
@@ -45,8 +40,6 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.cheese_cake_image) ImageView cheeseCakeImage;
 
-    private ArrayList<RecipeModel> mRecipes = new ArrayList<>();
-    private RecipeModel recipeName;
 
     @Override
     public void onAttach(Context context) {
