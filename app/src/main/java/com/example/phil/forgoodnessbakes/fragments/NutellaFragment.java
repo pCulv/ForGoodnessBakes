@@ -143,7 +143,7 @@ public class NutellaFragment extends Fragment {
             stepsRecyclerView.setLayoutManager(stepsLayoutManager);
             stepsRecyclerView.setHasFixedSize(true);
 
-            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener, mRecipe);
 
 
             stepsRecyclerView.setAdapter(stepsAdapter);

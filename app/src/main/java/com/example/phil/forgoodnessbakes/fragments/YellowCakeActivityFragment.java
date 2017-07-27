@@ -138,7 +138,7 @@ public class YellowCakeActivityFragment extends Fragment {
             yellowCakeStepsRV.setLayoutManager(stepsLayoutManager);
             yellowCakeStepsRV.setHasFixedSize(true);
 
-            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener, mRecipe);
             yellowCakeStepsRV.setAdapter(stepsAdapter);
 
             DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(yellowCakeStepsRV.getContext(),

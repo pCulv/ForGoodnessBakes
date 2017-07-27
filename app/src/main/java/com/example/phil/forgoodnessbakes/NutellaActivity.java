@@ -67,7 +67,7 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
         userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepModal.getVideoURL());
         userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepModal.getThumbnailURL());
         userClick.putExtra("position", viewHolder.getAdapterPosition());
-        userClick.putExtra("recipe", recipeModel.getSteps());
+        userClick.putExtra("steps", recipeModel.getSteps());
         startActivity(userClick);
     }
 

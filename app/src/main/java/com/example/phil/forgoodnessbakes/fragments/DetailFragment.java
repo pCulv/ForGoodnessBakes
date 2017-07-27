@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.DetailActivity;
 import com.example.phil.forgoodnessbakes.R;
-import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -37,6 +36,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -54,7 +54,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     private int position;
     private String mVideoUrl;
     private Step mStepModal;
-    private RecipeModel mRecipe;
+    private ArrayList<Step> mSteps;
     private static MediaSessionCompat mMediaSession;
 
 
@@ -75,7 +75,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             mVideoUrl = getArguments().getString(JSONKeys.KEY_VIDEO_URL);
             mStepModal = getArguments().getParcelable(JSONKeys.KEY_STEPS);
             stepDescription.setText(description);
-            mRecipe = getArguments().getParcelable("recipe");
+            mSteps = getArguments().getParcelableArrayList("steps");
             position = getArguments().getInt("position");
 
         } else {
@@ -86,6 +86,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             String description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
             stepDescription.setText(description);
             position = bundle.getInt("position");
+            mSteps = bundle.getParcelableArrayList("steps");
 
 
         }
@@ -106,7 +107,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
                 boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
                 if (!tabletSize) {
                     //if phone
-                    mRecipe.getSteps();
+                    mSteps.get(position + 1);
                     Intent nextStep = new Intent(getActivity(), DetailActivity.class);
                     startActivity(nextStep);
                 } else {

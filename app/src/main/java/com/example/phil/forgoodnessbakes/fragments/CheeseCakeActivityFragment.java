@@ -136,7 +136,7 @@ public class CheeseCakeActivityFragment extends Fragment {
             stepsRV.setLayoutManager(stepsLayoutManager);
             stepsRV.setHasFixedSize(true);
 
-            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener, mRecipe);
             stepsRV.setAdapter(stepsAdapter);
 
             DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(stepsRV.getContext(),

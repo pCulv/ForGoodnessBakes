@@ -133,7 +133,7 @@ public class BrownieActivityFragment extends Fragment {
             brownieStepsRV.setLayoutManager(stepsLayoutManager);
             brownieStepsRV.setHasFixedSize(true);
 
-            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener);
+            stepsAdapter = new StepsAdapter(this.getActivity(), mSteps, listener, mRecipe);
             brownieStepsRV.setAdapter(stepsAdapter);
 
             DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(brownieStepsRV.getContext(),

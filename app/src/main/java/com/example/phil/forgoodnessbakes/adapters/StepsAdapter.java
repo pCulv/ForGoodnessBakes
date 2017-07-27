@@ -32,10 +32,11 @@ public class StepsAdapter extends
 
 
 
-    public StepsAdapter(Context context, List<Step> steps, FragmentInterface listener) {
+    public StepsAdapter(Context context, List<Step> steps, FragmentInterface listener, RecipeModel recipe) {
         this.mContext = context;
         this.mSteps = steps;
         this.listener = listener;
+        this.mRecipe = recipe;
     }
 
     public class StepsViewHolder extends RecyclerView.ViewHolder {
