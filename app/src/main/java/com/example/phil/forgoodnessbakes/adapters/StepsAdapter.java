@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.phil.forgoodnessbakes.DetailActivity;
 import com.example.phil.forgoodnessbakes.FragmentInterface;
 import com.example.phil.forgoodnessbakes.R;
+import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.squareup.picasso.Picasso;
 
@@ -24,6 +25,7 @@ public class StepsAdapter extends
         RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
     private Context mContext;
     private List<Step> mSteps = new ArrayList<>();
+    private RecipeModel mRecipe = new RecipeModel();
     private FragmentInterface listener;
 
     private static final java.lang.String TAG = DetailActivity.class.getSimpleName();
@@ -69,6 +71,8 @@ public class StepsAdapter extends
         final String description = step.getDescription();
         final String thumbnailUrl = step.getThumbnailURL();
 
+
+
         // display short description of recipe
         holder.shortDescriptionTextView.setText(step.getShortDescription());
         //if thumbnail url is empty then do not load an image
@@ -84,7 +88,7 @@ public class StepsAdapter extends
         holder.shortDescriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.handleClick(step, videoUrl, description, holder);
+                listener.handleClick(step, videoUrl, description, holder, mRecipe);
                 Log.i(TAG, "onClick: " + holder.getAdapterPosition());
             }
         });
