@@ -23,9 +23,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
@@ -99,22 +97,7 @@ public class MainActivityTest2 {
                         isDisplayed()));
         linearLayout4.check(matches(isDisplayed()));
 
-        ViewInteraction linearLayout5 = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.cheese_cake_ingredients_rv),
-                                childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.RelativeLayout.class),
-                                        1)),
-                        7),
-                        isDisplayed()));
-        linearLayout5.check(matches(isDisplayed()));
-
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription("Navigate up"),
-                        withParent(allOf(withId(R.id.action_bar),
-                                withParent(withId(R.id.action_bar_container)))),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
+        pressBack();
 
     }
 

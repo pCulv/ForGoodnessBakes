@@ -1,14 +1,15 @@
 package com.example.phil.forgoodnessbakes.adapters;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.phil.forgoodnessbakes.DetailActivity;
 import com.example.phil.forgoodnessbakes.FragmentInterface;
 import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.models.Step;
@@ -24,6 +25,9 @@ public class StepsAdapter extends
     private Context mContext;
     private List<Step> mSteps = new ArrayList<>();
     private FragmentInterface listener;
+
+    private static final java.lang.String TAG = DetailActivity.class.getSimpleName();
+
 
 
     public StepsAdapter(Context context, List<Step> steps, FragmentInterface listener) {
@@ -58,18 +62,19 @@ public class StepsAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(StepsAdapter.StepsViewHolder holder, int position) {
+    public void onBindViewHolder(final StepsAdapter.StepsViewHolder holder, final int position) {
 
         final Step step = mSteps.get(position);
         final String videoUrl = step.getVideoURL();
         final String description = step.getDescription();
         final String thumbnailUrl = step.getThumbnailURL();
+
         // display short description of recipe
         holder.shortDescriptionTextView.setText(step.getShortDescription());
         //if thumbnail url is empty then do not load an image
         if (Objects.equals(thumbnailUrl, "")) {
             //do nothing
-        }else {
+        } else {
             //load image from thumbnail url received from the server
             Picasso.with(mContext)
                     .load(thumbnailUrl)
@@ -79,7 +84,8 @@ public class StepsAdapter extends
         holder.shortDescriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.handleClick(step, videoUrl, description);
+                listener.handleClick(step, videoUrl, description, holder);
+                Log.i(TAG, "onClick: " + holder.getAdapterPosition());
             }
         });
     }
@@ -90,18 +96,4 @@ public class StepsAdapter extends
         return mSteps.size();
     }
 
-    /*
-    Logic to determine if the app is running on a tablet.
-     */
-    private boolean isTablet(Context context) {
-        boolean xlarge = ((context.getResources()
-                .getConfiguration()
-                .screenLayout & Configuration
-                .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
-        boolean large = ((context.getResources()
-                .getConfiguration()
-                .screenLayout & Configuration
-                .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
-        return (xlarge || large);
-    }
 }

@@ -9,14 +9,14 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.DetailActivity;
-import com.example.phil.forgoodnessbakes.FragmentInterface;
+import com.example.phil.forgoodnessbakes.R;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
-import com.example.phil.forgoodnessbakes.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -44,23 +44,23 @@ import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment implements ExoPlayer.EventListener {
     private static final java.lang.String TAG = DetailActivity.class.getSimpleName();
-    @BindView(R.id.stepDescription)
-    TextView stepDescription;
-    @BindView(R.id.playerView)
-    SimpleExoPlayerView mPlayerView;
+    @BindView(R.id.stepDescription) TextView stepDescription;
+    @BindView(R.id.playerView) SimpleExoPlayerView mPlayerView;
+    @BindView(R.id.next_button) Button nextButton;
+    @BindView(R.id.prev_button) Button prevButton;
     private SimpleExoPlayer mExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
-    FragmentInterface listener;
+    private int position;
     private String mVideoUrl;
     private Step mStepModal;
-
     private static MediaSessionCompat mMediaSession;
+
 
     public DetailFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
@@ -73,6 +73,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             mVideoUrl = getArguments().getString(JSONKeys.KEY_VIDEO_URL);
             mStepModal = getArguments().getParcelable(JSONKeys.KEY_STEPS);
             stepDescription.setText(description);
+            position = getArguments().getInt("position");
 
         } else {
             // if bundle is coming from single pane layout
@@ -81,6 +82,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             mVideoUrl = bundle.getString(JSONKeys.KEY_VIDEO_URL);
             String description = bundle.getString(JSONKeys.KEY_DESCRIPTION);
             stepDescription.setText(description);
+            position = bundle.getInt("position");
 
         }
         //if step does not have a url attached
@@ -93,11 +95,37 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
         simpleExoPlayerView.setPlayer(mExoPlayer);
 
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "clicked " + position, Toast.LENGTH_SHORT).show();
+                boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+                if (!tabletSize) {
+                    //if phone
+
+                    Intent nextStep = new Intent(getActivity(), DetailActivity.class);
+                    startActivity(nextStep);
+                } else {
+                    //if tablet
+                }
+
+            }
+        });
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         initializeMediaSession();
         initializePlayer(mMediaUri);
+
         return view;
 
-    }private void initializeMediaSession() {
+    }
+
+    private void initializeMediaSession() {
 
         // Create a MediaSessionCompat.
         mMediaSession = new MediaSessionCompat(this.getActivity(), TAG);
@@ -211,6 +239,9 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     public void onPositionDiscontinuity() {
 
     }
+
+
+
 
     private class MySessionCallback extends MediaSessionCompat.Callback {
         @Override

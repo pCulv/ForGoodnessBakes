@@ -2,7 +2,6 @@ package com.example.phil.forgoodnessbakes.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -94,8 +93,10 @@ public class YellowCakeActivityFragment extends Fragment {
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
 
+
 // Displays collapsing toolbar layout only if app is viewed on a mobile device
-        if (!isTablet(this.getActivity())) {
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (!tabletSize) {
 
             if (mRecipe.getImage() != null) {
                 //load image from server
@@ -277,17 +278,7 @@ public class YellowCakeActivityFragment extends Fragment {
         });
 
     }
-    private boolean isTablet(Context context) {
-        boolean xlarge = ((context.getResources()
-                .getConfiguration()
-                .screenLayout & Configuration
-                .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
-        boolean large = ((context.getResources()
-                .getConfiguration()
-                .screenLayout & Configuration
-                .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
-        return (xlarge || large);
-    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_yellow_cake, menu);

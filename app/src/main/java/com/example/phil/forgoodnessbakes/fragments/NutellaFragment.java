@@ -2,7 +2,6 @@ package com.example.phil.forgoodnessbakes.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -59,7 +58,7 @@ public class NutellaFragment extends Fragment {
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
     RecipeModel mRecipe = new RecipeModel();
     private ArrayList<Ingredient> mIngredients = new ArrayList<>();
-    private ArrayList<Step> mSteps = new ArrayList<>();
+    public ArrayList<Step> mSteps = new ArrayList<>();
     public String recipesUrl =
             "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     private static final String MY_KEY = "Recipe List";
@@ -97,7 +96,8 @@ public class NutellaFragment extends Fragment {
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
 // Displays collapsing toolbar layout only if app is viewed on a mobile device
-        if (!isTablet(this.getActivity())) {
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (!tabletSize) {
 
             if (mRecipe.getImage() != null) {
                 //load image from server
@@ -300,17 +300,6 @@ public class NutellaFragment extends Fragment {
             }
         });
 
-    }
-    private boolean isTablet(Context context) {
-        boolean xlarge = ((context.getResources()
-                .getConfiguration()
-                .screenLayout & Configuration
-                .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE);
-        boolean large = ((context.getResources()
-                .getConfiguration()
-                .screenLayout & Configuration
-                .SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE);
-        return (xlarge || large);
     }
 
     @Override

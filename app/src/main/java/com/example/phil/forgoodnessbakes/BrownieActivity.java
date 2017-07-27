@@ -3,12 +3,13 @@ package com.example.phil.forgoodnessbakes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.example.phil.forgoodnessbakes.models.Step;
-import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 import com.example.phil.forgoodnessbakes.fragments.BrownieActivityFragment;
 import com.example.phil.forgoodnessbakes.fragments.DetailFragment;
+import com.example.phil.forgoodnessbakes.models.Step;
+import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
 
 import butterknife.ButterKnife;
 
@@ -42,11 +43,13 @@ public class BrownieActivity extends AppCompatActivity implements FragmentInterf
         return mTabletMode;
     }
     //    Uri elements parsed from JSON response and passed to @DetailFragment
-    private void replaceFragment(Step stepModal, String videoUrl, String description) {
+    private void replaceFragment(Step stepModal, String videoUrl, String description,
+                                 RecyclerView.ViewHolder viewHolder) {
         Bundle args = new Bundle();
         args.putParcelable(JSONKeys.KEY_STEPS, stepModal);
         args.putString(JSONKeys.KEY_VIDEO_URL, videoUrl);
         args.putString(JSONKeys.KEY_DESCRIPTION, description);
+        args.putInt("position", viewHolder.getAdapterPosition());
         DetailFragment detailActivityFragment = new DetailFragment();
         detailActivityFragment.setArguments(args);
         getSupportFragmentManager()
@@ -54,21 +57,23 @@ public class BrownieActivity extends AppCompatActivity implements FragmentInterf
                 .replace(R.id.detail_container, detailActivityFragment).commit();
     }
 
-    private void launchDetailActivity(Step stepModal) {
+    private void launchDetailActivity(Step stepModal, RecyclerView.ViewHolder viewHolder) {
         Intent userClick = new Intent(this, DetailActivity.class);
         userClick.putExtra(JSONKeys.KEY_DESCRIPTION, stepModal.getDescription());
         userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepModal.getVideoURL());
         userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepModal.getThumbnailURL());
+        userClick.putExtra("position", viewHolder.getAdapterPosition());
         startActivity(userClick);
     }
 
 
     @Override
-    public void handleClick(Step stepModel, String videoUrl, String description) {
+    public void handleClick(Step stepModel, String videoUrl, String description,
+                            RecyclerView.ViewHolder viewHolder) {
         if (isTablet()) {
-            replaceFragment(stepModel, videoUrl, description);
+            replaceFragment(stepModel, videoUrl, description, viewHolder);
         }else{
-            launchDetailActivity(stepModel);
+            launchDetailActivity(stepModel, viewHolder);
         }
     }
 }
