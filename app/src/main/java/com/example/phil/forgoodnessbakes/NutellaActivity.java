@@ -9,9 +9,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.phil.forgoodnessbakes.fragments.DetailFragment;
 import com.example.phil.forgoodnessbakes.fragments.NutellaFragment;
-import com.example.phil.forgoodnessbakes.models.RecipeModel;
 import com.example.phil.forgoodnessbakes.models.Step;
 import com.example.phil.forgoodnessbakes.networkUtils.JSONKeys;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,13 +47,13 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
     }
 //    Uri elements parsed from JSON response and passed to @DetailFragment
     private void replaceFragment(Step stepModal, String videoUrl, String description,
-                                 RecyclerView.ViewHolder viewHolder, RecipeModel recipeModel) {
+                                 RecyclerView.ViewHolder viewHolder, ArrayList<Step> steps) {
         Bundle args = new Bundle();
         args.putParcelable(JSONKeys.KEY_STEPS, stepModal);
         args.putString(JSONKeys.KEY_VIDEO_URL, videoUrl);
         args.putString(JSONKeys.KEY_DESCRIPTION, description);
         args.putInt("position", viewHolder.getAdapterPosition());
-        args.putParcelable("recipe", recipeModel);
+        args.putParcelableArrayList("steps", steps);
         DetailFragment detailActivityFragment = new DetailFragment();
         detailActivityFragment.setArguments(args);
         getSupportFragmentManager()
@@ -61,24 +62,24 @@ public class NutellaActivity extends AppCompatActivity implements FragmentInterf
     }
 
     private void launchDetailActivity(Step stepModal, RecyclerView.ViewHolder viewHolder,
-                                      RecipeModel recipeModel) {
+                                      ArrayList<Step> steps) {
         Intent userClick = new Intent(this, DetailActivity.class);
         userClick.putExtra(JSONKeys.KEY_DESCRIPTION, stepModal.getDescription());
         userClick.putExtra(JSONKeys.KEY_VIDEO_URL, stepModal.getVideoURL());
         userClick.putExtra(JSONKeys.KEY_THUMBNAIL_URL, stepModal.getThumbnailURL());
         userClick.putExtra("position", viewHolder.getAdapterPosition());
-        userClick.putExtra("steps", recipeModel.getSteps());
+        userClick.putExtra("steps", steps);
         startActivity(userClick);
     }
 
 
     @Override
     public void handleClick(Step stepModel, String videoUrl, String description,
-                            RecyclerView.ViewHolder viewHolder, RecipeModel recipeModel) {
+                            RecyclerView.ViewHolder viewHolder, ArrayList<Step> steps) {
         if (isTablet()) {
-            replaceFragment(stepModel, videoUrl, description, viewHolder, recipeModel);
+            replaceFragment(stepModel, videoUrl, description, viewHolder, steps);
         }else{
-            launchDetailActivity(stepModel, viewHolder, recipeModel);
+            launchDetailActivity(stepModel, viewHolder, steps);
         }
     }
 

@@ -17,14 +17,13 @@ import com.example.phil.forgoodnessbakes.models.Step;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
 public class StepsAdapter extends
         RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
     private Context mContext;
-    private List<Step> mSteps = new ArrayList<>();
+    private ArrayList<Step> mSteps = new ArrayList<>();
     private RecipeModel mRecipe = new RecipeModel();
     private FragmentInterface listener;
 
@@ -32,7 +31,7 @@ public class StepsAdapter extends
 
 
 
-    public StepsAdapter(Context context, List<Step> steps, FragmentInterface listener, RecipeModel recipe) {
+    public StepsAdapter(Context context, ArrayList<Step> steps, FragmentInterface listener, RecipeModel recipe) {
         this.mContext = context;
         this.mSteps = steps;
         this.listener = listener;
@@ -89,7 +88,7 @@ public class StepsAdapter extends
         holder.shortDescriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.handleClick(step, videoUrl, description, holder, mRecipe);
+                listener.handleClick(step, videoUrl, description, holder, mSteps);
                 Log.i(TAG, "onClick: " + holder.getAdapterPosition());
             }
         });
