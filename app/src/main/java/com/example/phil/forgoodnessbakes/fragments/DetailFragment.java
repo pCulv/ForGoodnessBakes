@@ -107,20 +107,20 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
                 tabletSize = getResources().getBoolean(R.bool.isTablet);
                 if (!tabletSize) {
                     //if phone
-                    Step nextStep = mSteps.get(position + 1);
-                    String description = getArguments().getString(JSONKeys.KEY_DESCRIPTION);
+                    if (mSteps != null) {
+                        Step nextStep = mSteps.get(position + 1);
 
-                    Intent nextClick = new Intent(getActivity(), DetailActivity.class);
-                    nextClick.putExtra(JSONKeys.KEY_DESCRIPTION, description);
-                    nextClick.putExtra(JSONKeys.KEY_VIDEO_URL, mVideoUrl);
-                    nextClick.putExtra("steps", nextStep);
-                    fetchNextStep();
-                    startActivity(nextClick);
+                        Intent nextClick = new Intent(getActivity(), DetailActivity.class);
+                        nextClick.putExtra(JSONKeys.KEY_DESCRIPTION, nextStep.getDescription());
+                        nextClick.putExtra(JSONKeys.KEY_VIDEO_URL, nextStep.getVideoURL());
+                        nextClick.putExtra("next", nextStep);
 
-                } else {
-                    //if tablet
+                        startActivity(nextClick);
+
+                    } else {
+
+                    }
                 }
-
             }
         });
         prevButton.setOnClickListener(new View.OnClickListener() {
@@ -139,19 +139,10 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
     void fetchNextStep() {
 
-        Step stepModal = getActivity().getIntent().getParcelableExtra("step");
-        String videoUrl = getActivity().getIntent().getStringExtra(JSONKeys.KEY_VIDEO_URL);
-        String description = getActivity().getIntent().getStringExtra(JSONKeys.KEY_DESCRIPTION);
-        ArrayList<Step> steps = getActivity().getIntent().getParcelableArrayListExtra("steps");
-        int position = getActivity().getIntent().getIntExtra("position", 0);
+        Intent intent = getActivity().getIntent();
 
-        Bundle args = new Bundle();
-        args.putParcelable(JSONKeys.KEY_STEPS, stepModal);
-        args.putString(JSONKeys.KEY_VIDEO_URL, videoUrl);
-        args.putString(JSONKeys.KEY_DESCRIPTION, description);
-        args.putParcelableArrayList("steps", steps);
-        args.putInt("position", position);
-
+        String description = intent.getStringExtra(JSONKeys.KEY_DESCRIPTION);
+        String videoUrl = intent.getStringExtra(JSONKeys.KEY_VIDEO_URL);
     }
 
     private void initializeMediaSession() {
