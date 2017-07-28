@@ -118,7 +118,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
                         startActivity(nextClick);
 
                     } else {
-
+                        fetchNextStep();
                     }
                 }
             }
@@ -143,6 +143,22 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
         String description = intent.getStringExtra(JSONKeys.KEY_DESCRIPTION);
         String videoUrl = intent.getStringExtra(JSONKeys.KEY_VIDEO_URL);
+        ArrayList<Step> steps = intent.getParcelableArrayListExtra("steps");
+        int position = intent.getIntExtra("position", 0);
+
+        Bundle args = new Bundle();
+
+        args.putString(JSONKeys.KEY_VIDEO_URL, videoUrl);
+        args.putString(JSONKeys.KEY_DESCRIPTION, description);
+        args.putParcelableArrayList("steps", steps);
+        args.putInt("position", position);
+
+        DetailFragment detailActivityFragment = new DetailFragment();
+        detailActivityFragment.setArguments(args);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.detail_container, detailActivityFragment).commit();
+
     }
 
     private void initializeMediaSession() {
