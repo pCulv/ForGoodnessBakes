@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,6 +57,8 @@ public class YellowCakeActivityFragment extends Fragment {
     @BindView(R.id.yellow_cake_ingredients_rv)
     RecyclerView yellowCakeRV;
     @BindView(R.id.yellow_cake_steps_rv) RecyclerView yellowCakeStepsRV;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
@@ -297,8 +301,9 @@ public class YellowCakeActivityFragment extends Fragment {
             editor.putString(MY_KEY, ingredientsJson);
             editor.apply();
             //how should I add ingredients list?
-            Toast.makeText(this.getActivity(), "Yellow cake ingredients added to widget", Toast.LENGTH_SHORT).show();
-        }
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "Ingredients added to widget", Snackbar.LENGTH_SHORT);
+            snackbar.show();        }
 
         return super.onOptionsItemSelected(item);
     }

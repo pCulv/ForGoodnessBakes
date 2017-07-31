@@ -3,6 +3,8 @@ package com.example.phil.forgoodnessbakes.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -11,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.phil.forgoodnessbakes.DetailActivity;
 import com.example.phil.forgoodnessbakes.R;
@@ -54,13 +55,16 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     Button nextButton;
     @BindView(R.id.prev_button)
     Button prevButton;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
     private SimpleExoPlayer mExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
     private int position;
     private String mVideoUrl;
-    private Step mStepModal;
+    public Step mStepModal;
     private String PLAYER_STATE = "playerState";
     private boolean tabletSize;
+    protected long currentPosition;
     private ArrayList<Step> mSteps;
     private static MediaSessionCompat mMediaSession;
 
@@ -77,6 +81,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         ButterKnife.bind(this, view);
 
         if (savedInstanceState != null) {
+            currentPosition = savedInstanceState.getLong(PLAYER_STATE, 0);
 
         }
         // if bundle is coming from fragment for two pane layout
@@ -103,10 +108,13 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         }
         //if step does not have a url attached
         if (Objects.equals(mVideoUrl, "")) {
-            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this.getActivity(), "No Video For This Step", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "No Video For This Step", Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
 
-        Uri mMediaUri = Uri.parse(mVideoUrl);
+
         SimpleExoPlayerView simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
 
         simpleExoPlayerView.setPlayer(mExoPlayer);
@@ -212,6 +220,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             }
         });
 
+        Uri mMediaUri = Uri.parse(mVideoUrl);
         initializeMediaSession();
         initializePlayer(mMediaUri);
 
@@ -273,15 +282,18 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
                             this.getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.seekTo(currentPosition);
         }
     }
 
     // Release ExoPlayer.
 
     private void releasePlayer() {
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;
+        if (mExoPlayer != null) {
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
 
     @Override
@@ -302,12 +314,14 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public void onResume() {
         super.onResume();
-      startPlayer();
+        startPlayer();
     }
 
     private void pausePlayer(){
-        mExoPlayer.setPlayWhenReady(false);
-        mExoPlayer.getPlaybackState();
+        if (mExoPlayer != null) {
+            mExoPlayer.setPlayWhenReady(false);
+            mExoPlayer.getPlaybackState();
+        }
     }
     private void startPlayer(){
         if (mExoPlayer != null) {
@@ -381,6 +395,8 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-
+        if (mExoPlayer != null) {
+            outState.putLong(PLAYER_STATE, currentPosition);
+        }
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +56,8 @@ public class BrownieActivityFragment extends Fragment {
     @BindView(R.id.brownie_ingredients_rv)
     RecyclerView brownieRecyclerView;
     @BindView(R.id.brownie_steps_rv) RecyclerView brownieStepsRV;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;
@@ -293,8 +297,9 @@ public class BrownieActivityFragment extends Fragment {
             String ingredientsJson = gson.toJson(mIngredients);
             editor.putString(MY_KEY, ingredientsJson);
             editor.apply();
-            //how should I add ingredients list?
-            Toast.makeText(this.getActivity(), "Brownie ingredients added to widget", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "Ingredients added to widget", Snackbar.LENGTH_SHORT);
+            snackbar.show();
         }
 
         return super.onOptionsItemSelected(item);
