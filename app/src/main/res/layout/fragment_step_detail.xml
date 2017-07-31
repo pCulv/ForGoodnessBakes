@@ -52,7 +52,7 @@
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/playerView"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="275dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -62,31 +62,35 @@
         android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:backgroundTint="@android:color/holo_red_light"
         android:elevation="2dp"
-        android:text="Next Step"
+        android:text="@string/next_step"
         android:textColor="@android:color/white"
         app:layout_constraintBaseline_toBaselineOf="@+id/prev_button"
-        app:layout_constraintRight_toRightOf="parent"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:visibility="visible"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/stepDescription" />
 
     <Button
         android:id="@+id/prev_button"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
         android:layout_marginBottom="-124dp"
-        android:layout_marginLeft="108dp"
+        android:layout_marginStart="108dp"
         android:backgroundTint="@android:color/holo_red_light"
         android:elevation="2dp"
-        android:text="Previous Step"
+        android:text="@string/previous_step"
         app:layout_constraintTop_toBottomOf="@id/stepDescription"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/next_button"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_bias="0.86"
+        android:visibility="visible"
+        app:layout_constraintVertical_bias="0.136" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -45,15 +46,20 @@ import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment implements ExoPlayer.EventListener {
     private static final java.lang.String TAG = DetailActivity.class.getSimpleName();
-    @BindView(R.id.stepDescription) TextView stepDescription;
-    @BindView(R.id.playerView) SimpleExoPlayerView mPlayerView;
-    @BindView(R.id.next_button) Button nextButton;
-    @BindView(R.id.prev_button) Button prevButton;
+    @BindView(R.id.stepDescription)
+    TextView stepDescription;
+    @BindView(R.id.playerView)
+    SimpleExoPlayerView mPlayerView;
+    @BindView(R.id.next_button)
+    Button nextButton;
+    @BindView(R.id.prev_button)
+    Button prevButton;
     private SimpleExoPlayer mExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
     private int position;
     private String mVideoUrl;
     private Step mStepModal;
+    private String PLAYER_STATE = "playerState";
     private boolean tabletSize;
     private ArrayList<Step> mSteps;
     private static MediaSessionCompat mMediaSession;
@@ -65,10 +71,14 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
         ButterKnife.bind(this, view);
 
+        if (savedInstanceState != null) {
+
+        }
         // if bundle is coming from fragment for two pane layout
         if (getArguments() != null) {
 
@@ -101,32 +111,104 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
         simpleExoPlayerView.setPlayer(mExoPlayer);
 
+        if (position == mSteps.size() - 1) {
+            nextButton.setVisibility(View.GONE);
+        }
+        if (position == 0) {
+            prevButton.setVisibility(View.INVISIBLE);
+        }
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tabletSize = getResources().getBoolean(R.bool.isTablet);
                 if (!tabletSize) {
-                    //if phone
+                    /*
+                    If app opens on phone, get the next position in the ArrayList<Step>. Intent
+                    extras are then passed onto next activity which opens a new DetailActivity
+                    populated by the data for the next step in the list.
+                     */
                     if (mSteps != null) {
-                        Step nextStep = mSteps.get(position + 1);
+                        position += 1;
+                        Step nextStep = mSteps.get(position);
 
                         Intent nextClick = new Intent(getActivity(), DetailActivity.class);
                         nextClick.putExtra(JSONKeys.KEY_DESCRIPTION, nextStep.getDescription());
                         nextClick.putExtra(JSONKeys.KEY_VIDEO_URL, nextStep.getVideoURL());
+                        nextClick.putExtra("steps", mSteps);
                         nextClick.putExtra("next", nextStep);
+                        nextClick.putExtra("position", position);
 
                         startActivity(nextClick);
 
-                    } else {
-                        fetchNextStep();
+                    }
+                } else {
+                          /*
+                    If app opens on phone, get the next position in the ArrayList<Step>. Intent
+                    extras are then passed onto next activity which opens a new DetailActivity
+                    populated by the data for the next step in the list.
+                     */
+                    if (mSteps != null) {
+                        position += 1;
+                        Step nextStep = mSteps.get(position);
+
+                        Bundle args = new Bundle();
+                        args.putString(JSONKeys.KEY_VIDEO_URL, nextStep.getVideoURL());
+                        args.putString(JSONKeys.KEY_DESCRIPTION, nextStep.getDescription());
+                        args.putInt("position", position);
+                        args.putParcelableArrayList("steps", mSteps);
+                        DetailFragment detailActivityFragment = new DetailFragment();
+                        detailActivityFragment.setArguments(args);
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.detail_container, detailActivityFragment).commit();
+
                     }
                 }
             }
         });
+
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tabletSize = getResources().getBoolean(R.bool.isTablet);
+                if (!tabletSize) {
+                    if (mSteps != null) {
+                        position -= 1;
+                        Step prevStep = mSteps.get(position);
 
+                        Intent nextClick = new Intent(getActivity(), DetailActivity.class);
+                        nextClick.putExtra(JSONKeys.KEY_DESCRIPTION, prevStep.getDescription());
+                        nextClick.putExtra(JSONKeys.KEY_VIDEO_URL, prevStep.getVideoURL());
+                        nextClick.putExtra("steps", mSteps);
+                        nextClick.putExtra("previous", prevStep);
+                        nextClick.putExtra("position", position);
+
+                        startActivity(nextClick);
+                    }
+                } else {
+                          /*
+                    If app opens on phone, get the previous position in the ArrayList<Step>. Intent
+                    extras are then passed onto previous activity which opens a new DetailActivity
+                    populated by the data for the next step in the list.
+                     */
+                    if (mSteps != null) {
+                        position -= 1;
+                        Step nextStep = mSteps.get(position);
+
+                        Bundle args = new Bundle();
+                        args.putString(JSONKeys.KEY_VIDEO_URL, nextStep.getVideoURL());
+                        args.putString(JSONKeys.KEY_DESCRIPTION, nextStep.getDescription());
+                        args.putInt("position", position);
+                        args.putParcelableArrayList("steps", mSteps);
+                        DetailFragment detailActivityFragment = new DetailFragment();
+                        detailActivityFragment.setArguments(args);
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.detail_container, detailActivityFragment).commit();
+
+                    }
+                }
             }
         });
 
@@ -137,29 +219,6 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
     }
 
-    void fetchNextStep() {
-
-        Intent intent = getActivity().getIntent();
-
-        String description = intent.getStringExtra(JSONKeys.KEY_DESCRIPTION);
-        String videoUrl = intent.getStringExtra(JSONKeys.KEY_VIDEO_URL);
-        ArrayList<Step> steps = intent.getParcelableArrayListExtra("steps");
-        int position = intent.getIntExtra("position", 0);
-
-        Bundle args = new Bundle();
-
-        args.putString(JSONKeys.KEY_VIDEO_URL, videoUrl);
-        args.putString(JSONKeys.KEY_DESCRIPTION, description);
-        args.putParcelableArrayList("steps", steps);
-        args.putInt("position", position);
-
-        DetailFragment detailActivityFragment = new DetailFragment();
-        detailActivityFragment.setArguments(args);
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.detail_container, detailActivityFragment).commit();
-
-    }
 
     private void initializeMediaSession() {
 
@@ -202,6 +261,8 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
                     .newSimpleInstance(this.getActivity(), trackSelector, loadControl);
             mPlayerView.setPlayer(mExoPlayer);
 
+            mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+
             // Set the ExoPlayer.EventListener to this activity.
             mExoPlayer.addListener(this);
 
@@ -214,8 +275,6 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
             mExoPlayer.setPlayWhenReady(true);
         }
     }
-
-
 
     // Release ExoPlayer.
 
@@ -232,10 +291,29 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         mMediaSession.setActive(false);
     }
 
+
+
     @Override
     public void onPause() {
         super.onPause();
-        mExoPlayer.release();
+        pausePlayer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+      startPlayer();
+    }
+
+    private void pausePlayer(){
+        mExoPlayer.setPlayWhenReady(false);
+        mExoPlayer.getPlaybackState();
+    }
+    private void startPlayer(){
+        if (mExoPlayer != null) {
+            mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.getPlaybackState();
+        }
     }
 
     @Override
@@ -277,8 +355,6 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     }
 
 
-
-
     private class MySessionCallback extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {
@@ -298,6 +374,13 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
 
     @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
 
     }
 }

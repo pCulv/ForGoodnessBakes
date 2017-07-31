@@ -66,6 +66,7 @@
         </activity>
         <activity
             android:name=".DetailActivity"
+            android:configChanges="orientation"
             android:label="@string/title_activity_nutella_step_detail"
             android:parentActivityName=".NutellaActivity"
             android:theme="@style/AppTheme">

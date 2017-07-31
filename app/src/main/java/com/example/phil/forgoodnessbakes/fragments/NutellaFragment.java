@@ -327,6 +327,12 @@ public class NutellaFragment extends Fragment {
             Toast.makeText(this.getActivity(), "Nutella Pie ingredients added to widget", Toast.LENGTH_SHORT).show();
         }
 
+        switch (id) {
+            case android.R.id.home:
+                getActivity().finish();
+                return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
