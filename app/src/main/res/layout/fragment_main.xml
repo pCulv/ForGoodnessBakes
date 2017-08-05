@@ -39,7 +39,7 @@
                     android:layout_below="@id/nutella_cake_image"
                     android:layout_gravity="bottom"
                     android:background="@android:color/holo_red_light"
-                    android:text="Nutella Cake"
+                    android:text="@string/nutella_pie_title"
                     android:textAlignment="viewStart"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp" />
@@ -76,7 +76,7 @@
                     android:layout_below="@id/brownies"
                     android:layout_gravity="bottom"
                     android:background="@android:color/holo_red_light"
-                    android:text="Brownie"
+                    android:text="@string/brownie"
                     android:textAlignment="viewStart"
                     android:textColor="#fff"
                     android:textSize="24sp" />
@@ -113,7 +113,7 @@
                     android:layout_below="@id/yellow_cake_image"
                     android:layout_gravity="bottom"
                     android:background="@android:color/holo_red_light"
-                    android:text="Yellow Cake"
+                    android:text="@string/yellow_cake"
                     android:textAlignment="viewStart"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp" />
@@ -149,7 +149,7 @@
                     android:layout_below="@id/cheese_cake_image"
                     android:layout_gravity="bottom"
                     android:background="@android:color/holo_red_light"
-                    android:text="Cheese Cake"
+                    android:text="@string/cheese_cake"
                     android:textAlignment="viewStart"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp" />

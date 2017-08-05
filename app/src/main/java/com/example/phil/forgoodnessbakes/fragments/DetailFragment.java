@@ -3,6 +3,7 @@ package com.example.phil.forgoodnessbakes.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -55,7 +56,7 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
     Button nextButton;
     @BindView(R.id.prev_button)
     Button prevButton;
-    @BindView(R.id.coordinatorLayout)
+    @Nullable @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
     private SimpleExoPlayer mExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
@@ -81,8 +82,8 @@ public class DetailFragment extends Fragment implements ExoPlayer.EventListener 
         ButterKnife.bind(this, view);
 
         if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getLong(PLAYER_STATE, 0);
-
+            currentPosition = savedInstanceState.getLong(PLAYER_STATE);
+            mExoPlayer.seekTo(currentPosition);
         }
         // if bundle is coming from fragment for two pane layout
         if (getArguments() != null) {

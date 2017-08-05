@@ -57,7 +57,7 @@ public class YellowCakeActivityFragment extends Fragment {
     @BindView(R.id.yellow_cake_ingredients_rv)
     RecyclerView yellowCakeRV;
     @BindView(R.id.yellow_cake_steps_rv) RecyclerView yellowCakeStepsRV;
-    @BindView(R.id.coordinatorLayout)
+    @Nullable @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;

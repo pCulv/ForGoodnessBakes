@@ -54,7 +54,7 @@ public class NutellaFragment extends Fragment {
     @BindView(R.id.nutella_ingredients_rv) RecyclerView ingredientsRecyclerView;
     @BindView(R.id.nutella_steps_rv) RecyclerView stepsRecyclerView;
     @Nullable @BindView(R.id.nutella_scroll) NestedScrollView mScrollView;
-    @BindView(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
+    @Nullable @BindView(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
     StepsAdapter stepsAdapter;

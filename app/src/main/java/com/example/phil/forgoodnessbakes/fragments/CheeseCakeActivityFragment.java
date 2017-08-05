@@ -57,7 +57,7 @@ public class CheeseCakeActivityFragment extends Fragment {
     @BindView(R.id.cheese_cake_ingredients_rv)
     RecyclerView ingredientsRV;
     @BindView(R.id.cheese_cake_steps_rv) RecyclerView stepsRV;
-    @BindView(R.id.coordinatorLayout)
+    @Nullable @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;

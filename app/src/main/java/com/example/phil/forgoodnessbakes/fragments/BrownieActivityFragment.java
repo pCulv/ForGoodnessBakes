@@ -56,7 +56,7 @@ public class BrownieActivityFragment extends Fragment {
     @BindView(R.id.brownie_ingredients_rv)
     RecyclerView brownieRecyclerView;
     @BindView(R.id.brownie_steps_rv) RecyclerView brownieStepsRV;
-    @BindView(R.id.coordinatorLayout)
+    @Nullable @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
     FragmentInterface listener;
     IngredientsAdapter ingredientsAdapter;
