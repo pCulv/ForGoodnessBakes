@@ -7,6 +7,9 @@ Baking App for Udacity Android Developer Nanodegree Project 3
 You will productionize an app, taking it from a functional state to a production-ready state. This will involve finding and handling error cases, adding accessibility features, allowing for localization, adding a widget, and adding a library.
 
 ## Screenshots
+![artboard 1](https://user-images.githubusercontent.com/20853402/29040406-eea5c3ee-7b7c-11e7-84e7-5e7c02518fab.png)
+
+![artboard 2](https://user-images.githubusercontent.com/20853402/29040409-f362cbf2-7b7c-11e7-92eb-270307ea1095.png)
 
 
 ## Why this Project?
