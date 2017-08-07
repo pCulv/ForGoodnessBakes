@@ -1,4 +1,4 @@
-# ForGoodnessBakes
+# For Goodness Bakes
 Baking App for Udacity Android Developer Nanodegree Project 3
 
 [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59889f38be66a7000136fa51&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59889f38be66a7000136fa51/build/latest?branch=master)
