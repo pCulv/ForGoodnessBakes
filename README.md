@@ -1,7 +1,6 @@
-# For Goodness Bakes
+![image](https://user-images.githubusercontent.com/20853402/29040684-ec32d86c-7b7d-11e7-8180-7450fede0319.png) [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59889f38be66a7000136fa51&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59889f38be66a7000136fa51/build/latest?branch=master)
+## For Goodness Bakes
 Baking App for Udacity Android Developer Nanodegree Project 3
-
-[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59889f38be66a7000136fa51&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59889f38be66a7000136fa51/build/latest?branch=master)
 
 ## Project Overview
 You will productionize an app, taking it from a functional state to a production-ready state. This will involve finding and handling error cases, adding accessibility features, allowing for localization, adding a widget, and adding a library.
